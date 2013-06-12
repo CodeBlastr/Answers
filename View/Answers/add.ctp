@@ -65,16 +65,8 @@
 
       </div>
 
-      <div class="row clearfix">
-        <div class="span12">
-          <hr>
-          By Adam Moore (<a href="http://twitter.com/minikomi" >@minikomi</a>).<br/>
-          Source on (<a href="https://github.com/minikomi/Bootstrap-Form-Builder" >Github</a>).
-        </div>
-      </div>
-
     </div> <!-- /container -->
 
-    <script data-main="assets/js/main-built.js" src="assets/js/lib/require.js" ></script>
+    <script data-main="/Answers/js/main-built.js" src="/Answers/js/lib/require.js" ></script>
   </body>
 </html>

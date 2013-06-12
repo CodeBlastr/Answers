@@ -20,6 +20,7 @@ class _AnswersController extends AnswersAppController {
 	
 	public function add() {
 		
+		
 	}
     
 
