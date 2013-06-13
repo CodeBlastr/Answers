@@ -19,7 +19,12 @@ class _AnswersController extends AnswersAppController {
 	
 	
 	public function add() {
-		
+			
+			if(!empty($this->request->data) && $this->request->isPost()) {
+				debug($this->request->data);
+			}
+			
+			$this->layout = 'formbuilder';
 		
 	}
     

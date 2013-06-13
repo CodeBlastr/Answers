@@ -31,19 +31,27 @@ define([
         title: "Buttons"
         , collection: new SnippetsCollection(JSON.parse(buttonsJSON))
       });
-      new TabView({
-        title: "Rendered"
-        , content: renderTab
-      });
-      new TabView({
-        title: "About"
-        , content: aboutTab
-      });
-
+      // new TabView({
+        // title: "Rendered"
+        // , content: renderTab
+      // });
+      // new TabView({
+        // title: "About"
+        // , content: aboutTab
+      // });
+      
+      //Custom Code for Title Handler
+	
+	 $('#formName').click(function() {
+		$('.popover #save').click(function() {
+		    alert($('#name').val());
+			$('#AnswerTitle').val($('#name').val());
+		});
+	 });
 
       //Make the first tab active!
-      $(".tab-pane").first().addClass("active");
-      $("ul.nav li").first().addClass("active");
+      $("#formBuilder .tab-pane").first().addClass("active");
+      $("#formBuilder ul.nav li").first().addClass("active");
       // Bootstrap "My Form" with 'Form Name' snippet.
       new MyFormView({
         title: "Original"
