@@ -39,15 +39,6 @@ define([
         // title: "About"
         // , content: aboutTab
       // });
-      
-      //Custom Code for Title Handler
-	
-	 $('#formName').click(function() {
-		$('.popover #save').click(function() {
-		    alert($('#name').val());
-			$('#AnswerTitle').val($('#name').val());
-		});
-	 });
 
       //Make the first tab active!
       $("#formBuilder .tab-pane").first().addClass("active");
