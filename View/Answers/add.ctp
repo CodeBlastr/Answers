@@ -14,7 +14,7 @@
 			    echo $this->Form->label('Success Message');
 			    echo $this->Form->textArea('Answer.success_message', array('class' => 'clearfix'));
 				echo $this->Form->label('Redirect');
-				echo $this->Form->select(null, $urls, array('id' => 'redirectSelect', 'required' => true, 'empty' => false));
+				echo $this->Form->select('redirect', $urls, array('id' => 'redirectSelect', 'required' => true, 'empty' => false));
 				echo $this->Form->input('Answer.success_url', array('type' => 'text', 'label' => 'url', 'div' => array('id' => 'urlSelect', 'style' => 'display:none;')));
 			    echo '</div>';
 				echo '<div class="span4">';

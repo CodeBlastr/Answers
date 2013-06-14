@@ -15,13 +15,21 @@ class _AnswersController extends AnswersAppController {
  * 
  * @var string
  */
-	public $uses = 'Answers.Answer';
+	public $uses = array('Answers.Answer', 'Answers.AnswerAnswer');
 	
+	/**
+	 * Add Function
+	 */
 	
 	public function add() {
 			
 			if(!empty($this->request->data) && $this->request->isPost()) {
-				debug($this->request->data);
+				if($this->Answer->save($this->request->data)) {
+					$this->Session->setFlash('Form Saved');
+					$this->redirect($this->referer());
+				}else {
+					throw new MethodNotAllowedException('Error');
+				}
 			}
 			
 			$this->set('models', $this->_getModels());
@@ -36,7 +44,57 @@ class _AnswersController extends AnswersAppController {
 		
 	}
 	
-	/*
+	public function view($id) {
+		if($id) {
+			$form = $this->Answer->find('first', array(
+				'conditions' => array('id' => $id),
+			));
+		}else {
+					throw new NotFoundException('Form not Found');
+				}
+		
+		$this->set('form', $form);
+		
+	}
+	
+	public function formProcess () {
+		debug($this->request->data);
+		if(empty($this->request->data)) {
+			throw new MethodNotAllowedException('No data');
+		}
+		// Grad the id
+		$id = $this->request->data['Answer']['id'];
+		unset($this->request->data['Answer']['id']);
+		$message = $this->request->data['Answer']['message'];
+		unset($this->request->data['Answer']['message']);
+		$redirect = $this->request->data['Answer']['redirect'];
+		unset($this->request->data['Answer']['redirect']);
+		$answers = array();
+		foreach($this->request->data['Answer'] as $key => $value) {
+			$answers[] = array(
+				'answer_id' => $id,
+				'form_input_name' => $key,
+				'value' => $value,
+			);
+		}
+		
+		if($this->AnswerAnswer->saveMany($answers)) {
+			$this->Session->setFlash($message);
+			switch ($redirect) {
+				case 'form':
+					break;
+				case 'referrer':
+					$this->redirect($this->referer());
+					break;
+				default:
+					$this->redirect($redirect);
+					break;
+			}
+		}
+		
+	}
+	
+	/**
 	 * Function to load all models with behavior attached to them
 	 * 
 	 * @todo Need to come up with a way to register and cache those models.
