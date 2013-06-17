@@ -72,7 +72,7 @@ class _AnswersController extends AnswersAppController {
 	
 	public function edit($id) {
 		
-		if(!empty($this->request->data) && $this->request->isPost()) {
+		if(!empty($this->request->data)) {
 			if($this->Answer->save($this->request->data)) {
 				$this->Session->setFlash('Form Saved');
 				$this->redirect($this->referer());
@@ -86,10 +86,17 @@ class _AnswersController extends AnswersAppController {
 				'conditions' => array('id' => $id),
 			));
 		}else {
-					throw new NotFoundException('Form not Found');
+			throw new NotFoundException('Form not Found');
 		}
 		
 		$this->request->data = $form;
+		$this->set('models', $this->_getModels());
+		$urls = array(
+			'referrer' => 'Previous Page',
+			'form' => 'A new Empty Form',
+			'url' => 'Another url',
+		);
+		$this->set('urls', $urls);
 		$this->set('form', $this->request->data);
 		$this->layout = 'formbuilder';
 		

@@ -43,22 +43,15 @@ define([
       //Make the first tab active!
       $("#formBuilder .tab-pane").first().addClass("active");
       $("#formBuilder ul.nav li").first().addClass("active");
+      rendered = $('#renderJson').val();
+      
       // Bootstrap "My Form" with 'Form Name' snippet.
       new MyFormView({
         title: "Original"
-        , collection: new MyFormSnippetsCollection(
-        [
-          { "title" : "Form Name"
-            , "fields": {
-              "name" : {
-                "label"   : "Form Name"
-                , "type"  : "input"
-                , "value" : "Form Name"
-              }
-            }
-          }
-        ])
+        , collection: new MyFormSnippetsCollection(JSON.parse(rendered))
       });
+      
+      console.log(MyFormView.collection);
     }
   }
 });

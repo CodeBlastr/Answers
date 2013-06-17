@@ -25,6 +25,8 @@ define([
 
     , render: function(){
       //Render Snippet Views
+ 	  var jdata = this.collection.toJSON();
+ 	  var myJSONText = JSON.stringify(jdata);
       this.$el.empty();
       var that = this;
       _.each(this.collection.renderAll(), function(snippet){
@@ -33,6 +35,7 @@ define([
       $("#render").val(that.renderForm({
         text: _.map(this.collection.renderAllClean(), function(e){return e.html()}).join("\n")
       }));
+      $('#renderJson').val(myJSONText);
       this.$el.appendTo("#build form");
       this.delegateEvents();
     }

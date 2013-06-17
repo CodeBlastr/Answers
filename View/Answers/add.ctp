@@ -11,6 +11,7 @@
 				echo $this->Form->select('Answer.model', $models, array('id' => 'modelSelect', 'required' => true, 'empty' => '-- Choose --'));
 				echo '<div id="actionSelect"></div>';
 				echo $this->Form->input('Answer.content', array('label' => false, 'type' => 'textarea', 'id' => 'render'));
+				echo $this->Form->input('Answer.content_json', array('label' => false, 'type' => 'textarea', 'id' => 'renderJson'));
 			    echo $this->Form->label('Success Message');
 			    echo $this->Form->textArea('Answer.success_message', array('class' => 'clearfix'));
 				echo $this->Form->label('Redirect');

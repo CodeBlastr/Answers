@@ -5,12 +5,14 @@
 			<?php echo $this->Form->create('Answer');
 				echo '<div class="row-fluid">';
 				echo '<div class="span3">';
+				echo $this->Form->input('Answer.id', array('type' => 'hidden'));
 				echo $this->Form->input('Answer.plugin', array('type' => 'hidden', 'value' => 'Answers'));
 				echo $this->Form->input('Answer.title', array('label' => 'Form Name', 'type' => 'text', 'required' => true));
 				echo $this->Form->label('Choose where the form saves');
 				echo $this->Form->select('Answer.model', $models, array('id' => 'modelSelect', 'required' => true, 'empty' => '-- Choose --'));
 				echo '<div id="actionSelect"></div>';
 				echo $this->Form->input('Answer.content', array('label' => false, 'type' => 'textarea', 'id' => 'render'));
+				echo $this->Form->input('Answer.content_json', array('label' => false, 'type' => 'textarea', 'id' => 'renderJson'));
 			    echo $this->Form->label('Success Message');
 			    echo $this->Form->textArea('Answer.success_message', array('class' => 'clearfix'));
 				echo $this->Form->label('Redirect');

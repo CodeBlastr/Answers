@@ -57,7 +57,8 @@ body {
   overflow: hidden;
 }
 
-#render{
+#render,
+#renderJson {
   display: none;
 }
 
