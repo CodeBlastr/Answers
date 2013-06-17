@@ -27,10 +27,10 @@ define([
         title: "Select"
         , collection: new SnippetsCollection(JSON.parse(selectJSON))
       });
-      new TabView({
-        title: "Buttons"
-        , collection: new SnippetsCollection(JSON.parse(buttonsJSON))
-      });
+      // new TabView({
+        // title: "Buttons"
+        // , collection: new SnippetsCollection(JSON.parse(buttonsJSON))
+      // });
       // new TabView({
         // title: "Rendered"
         // , content: renderTab
@@ -43,15 +43,18 @@ define([
       //Make the first tab active!
       $("#formBuilder .tab-pane").first().addClass("active");
       $("#formBuilder ul.nav li").first().addClass("active");
+      
+      //This gets the data from the hidden field populated from our database
       rendered = $('#renderJson').val();
+      if(rendered !== '') {
+      	rendered = JSON.parse(rendered);
+      }
       
       // Bootstrap "My Form" with 'Form Name' snippet.
       new MyFormView({
         title: "Original"
-        , collection: new MyFormSnippetsCollection(JSON.parse(rendered))
+        , collection: new MyFormSnippetsCollection(rendered)
       });
-      
-      console.log(MyFormView.collection);
     }
   }
 });

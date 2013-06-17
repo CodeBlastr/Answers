@@ -104,7 +104,7 @@ $(document).ready(function () {
 		$.ajax({
   			type: "POST",
   			url: "/answers/answers/getActions",
-  			data: { model: $(this).val() }
+  			data: { plugin: $(this).val() }
 				}).done(function( returnhtml ) {
   				$('#actionSelect').html(returnhtml);
 			});
@@ -136,6 +136,29 @@ $(document).ready(function () {
 			$('#autoEmailDiv').hide();
 		}		
 	});
+	
+	//Below is code not used yet
+	
+	// $("#target").on("click", '#id', function(event){
+  		// var model = $('#modelSelect').val();
+  		// console.log(model);
+  		// if(model !== 'Answer') {
+  			// var item = $(this);
+	  		// item.css('display', 'none');
+		  		// $.ajax({
+		  			// type: "POST",
+		  			// url: "/answers/answers/getColumns",
+		  			// data: { plugin: $('#modelSelect').val() }
+						// }).done(function( returnhtml ) {
+		  				// item.before(returnhtml);
+					// });
+			// }
+		// return false;
+	// });
+// 	
+	// $('#propertySelect').bind("change", function (event) {
+		// $(this).next('#id').val($(this.val()));
+	// });
 	
 });
 //]]>

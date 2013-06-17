@@ -17,6 +17,13 @@ class _AnswersController extends AnswersAppController {
  */
 	public $uses = array('Answers.Answer', 'Answers.AnswerAnswer');
 	
+/**
+ * Allowed Methods from the Classes used to filter the class action methods
+ * 
+ * @var string
+ */
+	public $allowedMethods = array('add', 'edit');
+	
 	
 	/**
 	 * index view of all forms created
@@ -154,27 +161,59 @@ class _AnswersController extends AnswersAppController {
 		$models = array(
 			'Answer' => 'Save to Database',
 		);
-		foreach(CakePlugin::loaded() as $model) {
-			$models[$model] = $model;
-		}
+		//Comented out not ready yet
+		// foreach(CakePlugin::loaded() as $model) {
+			// $models[$model] = $model;
+		// }
 		return $models;
 	}
 	
+	/**
+	 * Function to get the actions of the controller selected
+	 * 
+	 */
+	
+	
 	public function getActions() {
 		$this->layout = null;
-		$plugin = $this->request->data['model'];
-		if(!empty($plugin)) {
-			$controller = $plugin . 'Controller';
-			debug($controller);
-			App::uses($controller, $plugin.'.Controller');
-			$controller = new $controller;
-			debug($controller);
-				
-		}else {
-			$this->response->statusCode(403);
-		}
+		$plugin = $this->request->data['plugin'];
 		$actions = array('add' => 'Add to Database');
+		
+		//Commented out because not used yet
+		// if(!empty($plugin)) {
+			// $actions = array();
+			// $controller = $plugin . 'Controller';
+			// App::uses($controller, $plugin.'.Controller');
+			// $controller = new $controller;
+			// foreach (get_class_methods($controller) as $key => $val) { 
+                // /* Get a reflection object for the class method */ 
+                // $reflect = new ReflectionMethod($controller, $val); 
+// 				
+                // /* For private, use isPrivate().  For protected, use isProtected() */  
+                // if($reflect->isPublic() && in_array($val, $this->allowedMethods))  { 
+                   // $actions[] = $val;  
+                // } 
+            // } 
+// 			
+		// }
+		
 		$this->set('actions', $actions);
+	}
+	
+	public function getColumns() {
+		$this->layout = null;
+		$plugin = $this->request->data['plugin'];
+		if(!empty($plugin)) {
+			$actions = array();
+			$model = Inflector::singularize($plugin);
+			App::uses($model, $plugin.'.Model');
+			$model = new $model;
+			$props = array();
+			foreach($model->schema() as $k => $p) {
+				$props[$k] = $k;
+			};
+		}
+		$this->set('properties', $props);
 	}
     
 

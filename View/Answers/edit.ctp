@@ -106,7 +106,7 @@ $(document).ready(function () {
 		$.ajax({
   			type: "POST",
   			url: "/answers/answers/getActions",
-  			data: { model: $(this).val() }
+  			data: { plugin: $(this).val() }
 				}).done(function( returnhtml ) {
   				$('#actionSelect').html(returnhtml);
 			});
