@@ -57,6 +57,7 @@ class _AnswersController extends AnswersAppController {
 			'url' => 'Another url',
 		);
 		$this->set('urls', $urls);
+		$this->set('title_for_layout', 'Form Buildrr - add a new form');
 		$this->layout = 'formbuilder';
 			
 		
@@ -105,6 +106,7 @@ class _AnswersController extends AnswersAppController {
 		);
 		$this->set('urls', $urls);
 		$this->set('form', $this->request->data);
+		$this->set('title_for_layout', 'Form Buildrr - edit ' . $form['Answer']['title']);
 		$this->layout = 'formbuilder';
 		
 	}
@@ -196,7 +198,6 @@ class _AnswersController extends AnswersAppController {
             // } 
 // 			
 		// }
-		
 		$this->set('actions', $actions);
 	}
 	
