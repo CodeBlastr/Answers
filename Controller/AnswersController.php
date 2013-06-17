@@ -152,28 +152,27 @@ class _AnswersController extends AnswersAppController {
 	
 	private function _getModels() {
 		$models = array(
-			'Answers.Answer' => 'Save to Database',
+			'Answer' => 'Save to Database',
 		);
-		//debug(CakePlugin::loaded());
-		//break;
+		foreach(CakePlugin::loaded() as $model) {
+			$models[$model] = $model;
+		}
 		return $models;
 	}
 	
 	public function getActions() {
 		$this->layout = null;
-		// $model = $this->request->data['model'];
-		// if(!empty($model)) {
-			// $model = explode('.', $model);
-			// if (count($model) > 1) {
-				// $model = $model[1];
-			// }else {
-				// $model = $model[0];
-			// }
-		// }else {
-			// $this->response->statusCode(403);
-		// }
-		// $plugin = ZuhaInflector::pluginize($model);
-		// $controller = Inflector::pluralize($model);
+		$plugin = $this->request->data['model'];
+		if(!empty($plugin)) {
+			$controller = $plugin . 'Controller';
+			debug($controller);
+			App::uses($controller, $plugin.'.Controller');
+			$controller = new $controller;
+			debug($controller);
+				
+		}else {
+			$this->response->statusCode(403);
+		}
 		$actions = array('add' => 'Add to Database');
 		$this->set('actions', $actions);
 	}
