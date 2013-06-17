@@ -17,29 +17,40 @@ class _AnswersController extends AnswersAppController {
  */
 	public $uses = array('Answers.Answer', 'Answers.AnswerAnswer');
 	
+	
+	/**
+	 * index view of all forms created
+	 */
+	 
+	public function index() {
+		$this->Answer->recursive = 0;
+		$this->set('forms', $this->paginate());
+	} 
+	
+	
 	/**
 	 * Add Function
 	 */
 	
 	public function add() {
 			
-			if(!empty($this->request->data) && $this->request->isPost()) {
-				if($this->Answer->save($this->request->data)) {
-					$this->Session->setFlash('Form Saved');
-					$this->redirect($this->referer());
-				}else {
-					throw new MethodNotAllowedException('Error');
-				}
+		if(!empty($this->request->data) && $this->request->isPost()) {
+			if($this->Answer->save($this->request->data)) {
+				$this->Session->setFlash('Form Saved');
+				$this->redirect($this->referer());
+			}else {
+				throw new MethodNotAllowedException('Error');
 			}
-			
-			$this->set('models', $this->_getModels());
-			$urls = array(
-				'referrer' => 'Previous Page',
-				'form' => 'A new Empty Form',
-				'url' => 'Another url',
-			);
-			$this->set('urls', $urls);
-			$this->layout = 'formbuilder';
+		}
+		
+		$this->set('models', $this->_getModels());
+		$urls = array(
+			'referrer' => 'Previous Page',
+			'form' => 'A new Empty Form',
+			'url' => 'Another url',
+		);
+		$this->set('urls', $urls);
+		$this->layout = 'formbuilder';
 			
 		
 	}
@@ -52,20 +63,47 @@ class _AnswersController extends AnswersAppController {
 		}else {
 					throw new NotFoundException('Form not Found');
 				}
-		
+		if($form['success_url'] == 'referrer') {
+			$form['success_url'] = $this->referer();
+		}
 		$this->set('form', $form);
 		
 	}
 	
+	public function edit($id) {
+		
+		if(!empty($this->request->data) && $this->request->isPost()) {
+			if($this->Answer->save($this->request->data)) {
+				$this->Session->setFlash('Form Saved');
+				$this->redirect($this->referer());
+			}else {
+				throw new MethodNotAllowedException('Error');
+			}
+		}
+		
+		if($id) {
+			$form = $this->Answer->find('first', array(
+				'conditions' => array('id' => $id),
+			));
+		}else {
+					throw new NotFoundException('Form not Found');
+		}
+		
+		$this->request->data = $form;
+		$this->set('form', $this->request->data);
+		$this->layout = 'formbuilder';
+		
+	}
+	
 	public function formProcess () {
-		debug($this->request->data);
 		if(empty($this->request->data)) {
 			throw new MethodNotAllowedException('No data');
 		}
-		// Grad the id
+		
+		// Grab the needed variables for the form and unset them
 		$id = $this->request->data['Answer']['id'];
 		unset($this->request->data['Answer']['id']);
-		$message = $this->request->data['Answer']['message'];
+		$message = !empty($this->request->data['Answer']['message']) ? $this->request->data['Answer']['message'] : 'The form has been submitted';
 		unset($this->request->data['Answer']['message']);
 		$redirect = $this->request->data['Answer']['redirect'];
 		unset($this->request->data['Answer']['redirect']);
@@ -78,18 +116,22 @@ class _AnswersController extends AnswersAppController {
 			);
 		}
 		
-		if($this->AnswerAnswer->saveMany($answers)) {
-			$this->Session->setFlash($message);
-			switch ($redirect) {
+		try {
+			if($this->AnswerAnswer->saveMany($answers)) {
+				$this->Answer->process($id, $answers, $redirect);
+				$this->Session->setFlash($message);
+			}
+		}catch(Exception $e) {	
+			debug($e->getMessage());
+		}
+		
+		switch ($redirect) {
 				case 'form':
-					break;
-				case 'referrer':
 					$this->redirect($this->referer());
 					break;
 				default:
 					$this->redirect($redirect);
 					break;
-			}
 		}
 		
 	}

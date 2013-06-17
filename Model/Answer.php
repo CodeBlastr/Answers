@@ -68,5 +68,39 @@ class Answer extends AnswersAppModel {
 			'put' => 'put',
 			'delete' => 'delete'
 		);
+		
+	public function process ($id = null, $answers) {
+		
+		//If id is false check the id propery
+		if($id == null && isset($this->id)) {
+			$id = $this->id;
+		}
+		if(empty($id)) {
+			throw new Exception(__('No Form Id'));
+		}
+		
+		//Get the form
+		$form = $this->find('first', array(
+			'conditions' => array('id' => $id),
+		));
+		
+		//Send Emails if set
+		if($form['Answer']['send_email'] == 1) {
+			
+			if(!empty($form['Answer']['response_email'])) {
+				$addresses = explode(',', str_replace(' ', '' , $form['Answer']['response_email']));
+			}else {
+				throw new Exception('No Email addresses defined');
+			}
+
+			$message['html'] = $form['Answer']['success_message'];
+			$from = array('info@educastic.com' => __SYSTEM_SITE_NAME);
+			$subject = $form['Answer']['response_subject'];
+			foreach($addresses as $address) {
+				$this->__sendMail($address, $subject, $message);
+			}
+		}
+		
+	}
 
 }
