@@ -15,7 +15,7 @@ class _AnswersController extends AnswersAppController {
  * 
  * @var string
  */
-	public $uses = array('Answers.Answer', 'Answers.AnswerAnswer');
+	public $uses = array('Answers.Answer', 'Answers.AnswerAnswer', 'Contact.Contact', 'Answers.AnswerSubmission');
 	
 /**
  * Allowed Methods from the Classes used to filter the class action methods
@@ -49,7 +49,6 @@ class _AnswersController extends AnswersAppController {
 				throw new MethodNotAllowedException('Error');
 			}
 		}
-		
 		$this->set('models', $this->_getModels());
 		$urls = array(
 			'referrer' => 'Previous Page',
@@ -71,10 +70,39 @@ class _AnswersController extends AnswersAppController {
 		}else {
 					throw new NotFoundException('Form not Found');
 				}
-		if($form['success_url'] == 'referrer') {
-			$form['success_url'] = $this->referer();
+		if($form['Answer']['success_url'] == 'referrer') {
+			$form['Answer']['success_url'] = $this->referer();
 		}
+		
+		$submit = true;
+		//If user is guest skip this step
+		if($this->Session->read('Auth.User.user_role_id') != __SYSTEM_GUESTS_USER_ROLE_ID) {
+			//Check the user submissions 
+			$count = $this->_submissionCount($form['Answer']['id']);
+			$message = '';
+			if($count != 0) {
+				if($count == 1) {
+					$message = __('You have already submitted this form');
+				}else {
+					$message = __('You have already submitted this form ' . $count . ' times');
+					}
+			}
+			
+			$allowedCount = $form['Answer']['allowed_user_submissions'];
+			if($allowedCount != 0 || !empty($allowedCount)) {
+				if($count >= $allowedCount) {
+					$message = __('You have submitted the form the max amount of times');
+					$submit = false;
+				}
+			}
+			
+			if(!empty($message)) {
+				$this->Session->setFlash($message, 'default', array(), 'formmessage');
+			}
+		}
+
 		$this->set('form', $form);
+		$this->set('submit', $submit);
 		
 	}
 	
@@ -134,8 +162,9 @@ class _AnswersController extends AnswersAppController {
 		
 		try {
 			if($this->AnswerAnswer->saveMany($answers)) {
-				$this->Answer->process($id, $answers, $redirect);
+				$this->_submission($id);
 				$this->Session->setFlash($message);
+				$this->Answer->process($id, $answers, $redirect);
 			}
 		}catch(Exception $e) {	
 			debug($e->getMessage());
@@ -215,6 +244,46 @@ class _AnswersController extends AnswersAppController {
 			};
 		}
 		$this->set('properties', $props);
+	}
+	
+	/**
+	 * submission function - Create a sumbission if exists, else creates one
+	 * Increments the Submission Count
+	 * 
+	 * @param $answerID -  The Answer(Form) ID
+	 * @return the count
+	 */
+	
+	private function _submission ($answerId) {
+		//get the user id
+		$uid = $this->Session->read('Auth.User.id');
+		$conditions = array('answer_id' => $answerId, 'creator_id' => $uid);
+		if($this->AnswerSubmission->hasAny($conditions)) {
+			$answerSubmission = $this->AnswerSubmission->find('first', array($conditions));
+		}else {
+			$answerSubmission = array('AnswerSubmission' => array(
+				'answer_id' => $answerId,
+				'count' => 0,
+				'from_ip' => $_SERVER['REMOTE_ADDR'],
+			));
+		}
+		//increment count
+		$answerSubmission['AnswerSubmission']['count'] = $answerSubmission['AnswerSubmission']['count'] + 1;
+		$this->AnswerSubmission->save($answerSubmission);
+		
+		return $answerSubmission['AnswerSubmission']['count'];
+	}
+	
+	private function _submissionCount ($answerId) {
+		//get the user id
+		$uid = $this->Session->read('Auth.User.id');
+		$conditions = array('answer_id' => $answerId, 'creator_id' => $uid);
+		$count = 0;
+		if($this->AnswerSubmission->hasAny($conditions)) {
+			$count = $this->AnswerSubmission->field('count', array($conditions));
+		}
+		
+		return $count;
 	}
     
 

@@ -5,7 +5,7 @@ class Answer extends AnswersAppModel {
 	
 	public $name = 'Answer';
 	
-	public $actsAs = array('Copyable');
+	public $actsAs = array('Copyable', 'Alias');
 	
 	/**
 	 * Validation rules
