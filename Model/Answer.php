@@ -95,7 +95,7 @@ class Answer extends AnswersAppModel {
 				throw new Exception('No Email addresses defined');
 			}
 
-			$message['html'] = $form['Answer']['success_message'];
+			$message['html'] = $form['Answer']['response_body'];
 			$from = array('info@educastic.com' => __SYSTEM_SITE_NAME);
 			$subject = $form['Answer']['response_subject'];
 			foreach($addresses as $address) {
