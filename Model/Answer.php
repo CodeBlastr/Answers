@@ -102,5 +102,9 @@ class Answer extends AnswersAppModel {
 		}
 		
 	}
+	
+	private function _replaceTokens ($str) {
+		
+	}
 
 }
