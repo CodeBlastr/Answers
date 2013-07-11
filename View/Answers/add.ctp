@@ -60,6 +60,7 @@
 			
 			<?php	
 				echo '<div id="FormOptions" class="active">';
+					echo $this->Form->input('Answer.id', array('type' => 'hidden'));
 					echo $this->Form->input('Answer.plugin', array('type' => 'hidden', 'value' => 'Answers'));
 					echo $this->Form->input('Answer.title', array('label' => 'Form Name', 'type' => 'text', 'required' => true));
 					echo $this->Form->label('Choose where the form saves');
@@ -124,13 +125,3 @@
 </div>
 
 <hr />
-
-<style>
-	
-</style>
-
-<?php 
-
-include '../../webroot/js/answers.js';
-
-?>

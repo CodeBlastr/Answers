@@ -1,5 +1,3 @@
-<script type="text/javascript">
-//<![CDATA[
 
 var tokens = [];
 
@@ -83,6 +81,13 @@ $(document).ready(function () {
 		
 	});
 	
+	$(document).on('click', '#tokenRefresh', function(e) {
+		getTokens();
+	});
+	
+	//Populates the token array when page loads
+	getTokens();
+	
 	//Below is code not used yet
 	
 	// $("#target").on("click", '#id', function(event){
@@ -108,12 +113,22 @@ $(document).ready(function () {
 	
 });
 
+function getTokens() {
+	tokens = [];
+	$('#target .component .control-group label').each(function(e) {
+		var id = $(this).prop('for');
+		tokens.push(id);
+	});
+	refreshToken();
+}
+
 function refreshToken() {
 	var choices = '<ul class="token-nav">';
 	for(var i=0 ; i<tokens.length ; i++) {
 		choices += '<li><a href="#" data-token="'+tokens[i]+'">'+tokens[i]+'</a></li>';
 	}
-	choices += '</ul>'
+	choices += '</ul>';
+	choices += '<a href="#" id="tokenRefresh">Refresh Tokens</a>';
 	$('.token-choices').html(choices);
 }
 
@@ -144,5 +159,3 @@ function repTokens(textValue, id) {
             txtArea.focus();
         }
 }
-//]]>
-</script>

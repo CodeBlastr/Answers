@@ -108,6 +108,8 @@ class _AnswersController extends AnswersAppController {
 	
 	public function edit($id) {
 		
+		$this->view = 'add';
+		
 		if(!empty($this->request->data)) {
 			if($this->Answer->save($this->request->data)) {
 				$this->Session->setFlash('Form Saved');

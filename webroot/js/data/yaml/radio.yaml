@@ -9,6 +9,10 @@
       label  : Label Text
       type   : input
       value  : Multiple Radios
+    required:
+      label  : Required
+      type   : checkbox
+      value  : false
     radios:
       label  : Radios
       type   : textarea-split

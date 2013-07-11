@@ -12,6 +12,11 @@
         "type": "input",
         "value": "Select Basic"
       },
+      "required": {
+        "label": "Required",
+        "type": "checkbox",
+        "value": false
+      },
       "options": {
         "label": "Options",
         "type": "textarea-split",
@@ -70,6 +75,11 @@
         "label": "Label Text",
         "type": "input",
         "value": "Select Multiple"
+      },
+      "required": {
+        "label": "Required",
+        "type": "checkbox",
+        "value": false
       },
       "options": {
         "label": "Options",
