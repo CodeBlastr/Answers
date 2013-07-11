@@ -5,7 +5,9 @@ class Answer extends AnswersAppModel {
 	
 	public $name = 'Answer';
 	
-	public $actsAs = array('Copyable', 'Alias');
+	public $actsAs = array(
+		'Copyable', 
+		'Optimizable');
 	
 	/**
 	 * Validation rules
@@ -93,13 +95,17 @@ class Answer extends AnswersAppModel {
 				throw new Exception('No Email addresses defined');
 			}
 
-			$message['html'] = $form['Answer']['success_message'];
+			$message['html'] = $form['Answer']['response_body'];
 			$from = array('info@educastic.com' => __SYSTEM_SITE_NAME);
 			$subject = $form['Answer']['response_subject'];
 			foreach($addresses as $address) {
 				$this->__sendMail($address, $subject, $message);
 			}
 		}
+		
+	}
+	
+	private function _replaceTokens ($str) {
 		
 	}
 
