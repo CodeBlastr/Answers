@@ -1,5 +1,3 @@
-<?php //debug($this->here); ?>
-
 <div class="row-fluid">
 	<h3><?php echo $form['Answer']['title']; ?></h3>
 	

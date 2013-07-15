@@ -73,36 +73,9 @@ class _AnswersController extends AnswersAppController {
 		if($form['Answer']['success_url'] == 'referrer') {
 			$form['Answer']['success_url'] = $this->referer();
 		}
-		
-		$submit = true;
-		//If user is guest skip this step
-		if($this->Session->read('Auth.User.user_role_id') != __SYSTEM_GUESTS_USER_ROLE_ID) {
-			//Check the user submissions 
-			$count = $this->_submissionCount($form['Answer']['id']);
-			$message = '';
-			if($count != 0) {
-				if($count == 1) {
-					$message = __('You have already submitted this form');
-				}else {
-					$message = __('You have already submitted this form ' . $count . ' times');
-					}
-			}
 			
-			$allowedCount = $form['Answer']['allowed_user_submissions'];
-			if($allowedCount != 0 || !empty($allowedCount)) {
-				if($count >= $allowedCount) {
-					$message = __('You have submitted the form the max amount of times');
-					$submit = false;
-				}
-			}
-			
-			if(!empty($message)) {
-				$this->Session->setFlash($message, 'default', array(), 'formmessage');
-			}
-		}
-
 		$this->set('form', $form);
-		$this->set('submit', $submit);
+		$this->set('submit', $this->_checkSubmissions($form));
 		
 	}
 	
@@ -161,6 +134,8 @@ class _AnswersController extends AnswersAppController {
 				'value' => $value,
 			);
 		}
+		
+		$answers = Sanitize::clean($answers, array('encode' => true));
 		
 		try {
 			if($this->AnswerAnswer->saveMany($answers)) {
@@ -286,6 +261,55 @@ class _AnswersController extends AnswersAppController {
 		}
 		
 		return $count;
+	}
+
+/**
+ * Used to display a form using requestAction in the default layout.
+ *
+ * @param {id}			The form id to call.
+ * @return {string} 	Rendered From View
+ */
+	public function display($id) {
+		$this->Answer->id = $id;
+		if (!$this->Answer->exists()) {
+			throw new NotFoundException(__('Invalid form.'));
+		}
+		$form = $this->Answer->find('first', array('conditions' => array('id' => $id)));
+		$this->layout = null;
+		$this->set('form', $form);
+		$this->set('submit', $this->_checkSubmissions($form));
+		$html = $this->render('view');
+	}
+
+	private function _checkSubmissions ($answer) {
+		$submit = true;
+		//If user is guest skip this step
+		if($this->Session->read('Auth.User.user_role_id') != __SYSTEM_GUESTS_USER_ROLE_ID) {
+			//Check the user submissions 
+			$count = $this->_submissionCount($form['Answer']['id']);
+			$message = '';
+			if($count != 0) {
+				if($count == 1) {
+					$message = __('You have already submitted this form');
+				}else {
+					$message = __('You have already submitted this form ' . $count . ' times');
+					}
+			}
+			
+			$allowedCount = $form['Answer']['allowed_user_submissions'];
+			if($allowedCount != 0 || !empty($allowedCount)) {
+				if($count >= $allowedCount) {
+					$message = __('You have submitted the form the max amount of times');
+					$submit = false;
+				}
+			}
+			
+			if(!empty($message)) {
+				$this->Session->setFlash($message, 'default', array(), 'formmessage');
+			}
+		}
+		
+		return $submit;
 	}
     
 

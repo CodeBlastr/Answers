@@ -79,6 +79,8 @@
 			    echo $this->Form->checkbox('Answer.auto_respond', array('hiddenField' => false));
 			    echo 'Auto Respond</label>';
 				echo '<div id="autoEmailDiv" style="display:none;">';
+				echo $this->Form->label('Auto Email Field. Please enter the id of the field for autoresponder');
+					echo $this->Form->text('Answer.auto_email');
 				echo $this->Form->label('Auto Response Subject');
 				echo $this->Form->text('Answer.auto_subject');
 			    echo $this->Form->label('Auto Response Body');

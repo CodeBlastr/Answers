@@ -86,27 +86,81 @@ class Answer extends AnswersAppModel {
 			'conditions' => array('id' => $id),
 		));
 		
-		//Send Emails if set
-		if($form['Answer']['send_email'] == 1) {
+		//Send Auto Responders
+		if($form['Answer']['auto_respond'] == 1) {
+			$this->_sendAutoResponseMail($form, $answers);
+		}
 			
-			if(!empty($form['Answer']['response_email'])) {
-				$addresses = explode(',', str_replace(' ', '' , $form['Answer']['response_email']));
-			}else {
-				throw new Exception('No Email addresses defined');
-			}
+		//Send Emails if set
+		if($form['Answer']['send_email'] == 1 && !empty($form['Answer']['auto_email'])) {
+			
+			$this->_sendResponseMail($form, $answers);
+		}
+		
+	}
 
-			$message['html'] = $form['Answer']['response_body'];
+/**
+ * Send Emails to notifiees
+ */
+	
+	private function _sendResponseMail ($form, $answers) {
+		if(!empty($form['Answer']['response_email'])) {
+			$addresses = explode(',', str_replace(' ', '' , $form['Answer']['response_email']));
+			$message['html'] = $this->_replaceTokens($this->_cleanAnswers($answers), $form['Answer']['response_body']);
 			$from = array('info@educastic.com' => __SYSTEM_SITE_NAME);
 			$subject = $form['Answer']['response_subject'];
 			foreach($addresses as $address) {
 				$this->__sendMail($address, $subject, $message);
 			}
-		}
-		
+		}	
 	}
 	
-	private function _replaceTokens ($str) {
-		
+	/**
+	 * Send Autoresponses
+	 */
+	
+	private function _sendAutoResponseMail ($form, $answers) {
+			
+			$answers = _cleanAnswers($answers);
+			
+			$emailto = $answers[$form['Answer']['auto_email']];
+			
+			$message['html'] = $this->_replaceTokens($this->_cleanAnswers($answers), $form['Answer']['auto_body']);
+			$from = array('info@educastic.com' => __SYSTEM_SITE_NAME);
+			$subject = $form['Answer']['auto_subject'];
+			foreach($addresses as $address) {
+				$this->__sendMail($address, $subject, $message);
+			}
+	}
+	 
+	
+	/**
+	 * Clean the answer array for string replacement
+	 * @param {$answers} array of $answers
+	 * @return array keyed by input => value
+	 */
+	
+	private function _cleanAnswers ($answers) {
+		$arr = array();
+		foreach($answers as $answer) {
+			$arr[$answer['form_input_name']] = $answer['value'];
+		}
+		return $arr;
+	}
+	
+	/**
+	 * Token Replacement Function
+	 * Tokens should be in the format *| value |*
+	 * @param $arr array of replacement keyed by token
+	 * @param $str string to replace tokens in
+	 * @return returns string with tokens replaced
+	 */
+	private function _replaceTokens ($arr, $str) {
+		foreach($arr as $token => $value) {
+			$token = '*| '.$token. ' |*';
+			$str = str_replace($token, $value, $str);
+		}
+		return $str;
 	}
 
 }

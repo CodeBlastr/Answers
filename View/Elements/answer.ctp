@@ -1,1 +1,1 @@
-form element will be here next week for answer element id : <?php echo $id; ?>
+<?php echo $this->requestAction('/answers/answers/display/'.$id); ?>
