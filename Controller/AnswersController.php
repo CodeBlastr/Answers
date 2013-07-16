@@ -39,13 +39,19 @@ class _AnswersController extends AnswersAppController {
 	 * Add Function
 	 */
 	
-	public function add() {
+	public function add($foreignModel = null, $foreignKey = null) {
 			
-		if(!empty($this->request->data) && $this->request->isPost()) {
-			if($this->Answer->save($this->request->data)) {
+		if ( !empty($this->request->data) && $this->request->isPost() ) {
+			// associations!
+			if ( !empty($foreignModel) && !empty($foreignKey) ) {
+				$this->request->data['Answer']['foreign_model'] = $foreignModel;
+				$this->request->data['Answer']['foreign_key'] = $foreignKey;
+			}
+			// saving!
+			if ( $this->Answer->save($this->request->data) ) {
 				$this->Session->setFlash('Form Saved');
 				$this->redirect($this->referer());
-			}else {
+			} else {
 				throw new MethodNotAllowedException('Error');
 			}
 		}
@@ -165,7 +171,7 @@ class _AnswersController extends AnswersAppController {
 	 * Right now the model only returns the AnswerAnswer Model to save
 	 */
 	
-	private function _getModels() {
+	protected function _getModels() {
 		$models = array(
 			'Answer' => 'Save to Database',
 		);
@@ -231,7 +237,7 @@ class _AnswersController extends AnswersAppController {
 	 * @return the count
 	 */
 	
-	private function _submission ($answerId) {
+	protected function _submission ($answerId) {
 		//get the user id
 		$uid = $this->Session->read('Auth.User.id');
 		$conditions = array('answer_id' => $answerId, 'creator_id' => $uid);
@@ -251,7 +257,7 @@ class _AnswersController extends AnswersAppController {
 		return $answerSubmission['AnswerSubmission']['count'];
 	}
 	
-	private function _submissionCount ($answerId) {
+	protected function _submissionCount ($answerId) {
 		//get the user id
 		$uid = $this->Session->read('Auth.User.id');
 		$conditions = array('answer_id' => $answerId, 'creator_id' => $uid);
@@ -281,7 +287,7 @@ class _AnswersController extends AnswersAppController {
 		$html = $this->render('view');
 	}
 
-	private function _checkSubmissions ($answer) {
+	protected function _checkSubmissions ($answer) {
 		$submit = true;
 		//If user is guest skip this step
 		if($this->Session->read('Auth.User.user_role_id') != __SYSTEM_GUESTS_USER_ROLE_ID) {
