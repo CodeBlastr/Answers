@@ -126,6 +126,7 @@
 				<?php echo $this->Form->input('Fake.labelEditor', array('type' => 'richtext')); ?>
 				<a class="btn" href="#" id="ckeditorInsert">Insert</a>
 				<a class="btn" href="#" id="ckeditorCancel">Cancel</a>
+				<div class="clearfix"></</div>
 			</div>
 			<?php echo $this->Form->end(); ?>
 		</div>

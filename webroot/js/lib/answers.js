@@ -1,9 +1,11 @@
 
 var tokens = [];
+var labeleditor;
+var targetel;
 
 $(document).ready(function () {
 	
-	var labeleditor = CKEDITOR.instances['FakeLabelEditor'];
+	labeleditor = CKEDITOR.instances['FakeLabelEditor'];
 	
 	$('#formOptionContent').children('div').not('.active').hide('slow');
 	
@@ -85,27 +87,28 @@ $(document).ready(function () {
 	
 	$('#target').on('click', '#label', function(e) {
 		var offset = $(this).offset();
-		var target = $(this);
+		targetel = $(this);
+		$('.adv-label-editor').remove();
 		$(this).after('<a href="#" class="adv-label-editor">Advanced</a>');
 		$('#labelTextArea').css('left', offset.left+$(this).width()).css('top', offset.top+$(this).height());
-		$('#labelTextArea').on('click', '#ckeditorInsert', function(e){
-			target.val(labeleditor.getData());
+		
+		$('#labelTextArea').on('click', '#ckeditorInsert', function() {
+			targetel.val(labeleditor.getData());
 			$('#labelTextArea').css('display', 'none');
 			labeleditor.setData('');
 		});
-		$('#target').on('click', '.adv-label-editor', function(e) {
-			labeleditor.setData(target.val());
+		$('#target').on('click', '.adv-label-editor', function() {
+			labeleditor.setData(targetel.val());
 			$('#labelTextArea').css('display', 'block');
 		});
 	});
-
-	$('#target').on('click', '.adv-label-editor', function(e) {
-		$('#labelTextArea').css('display', 'block');
-	});
 	
-	$('#target').on('click', '#ckeditorCancel', function(e){
-			$('#labelTextArea').css('display', 'none');
+	$('#labelTextArea').on('click', '#ckeditorCancel', function(e){
 			labeleditor.setData('');
+			console.log(labeleditor.getData());
+			$('#labelTextArea').css('display', 'none');
+			$('#labelTextArea').off('click', '#ckeditorInsert', function(){});
+			$('#target').off('click', '.adv-label-editor', function(){});
 	});
 	
 	$(document).on('click', '#tokenRefresh', function(e) {

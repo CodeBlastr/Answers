@@ -113,7 +113,6 @@ We need to over-ride some inherited stuff.. */
 	position: absolute;
 	display: none;
 	width: 525px;
-	height: 150px;
 	background: #fff;
 	padding:10px;
 	z-index: 9999;
