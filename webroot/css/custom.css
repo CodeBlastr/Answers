@@ -100,9 +100,32 @@ We need to over-ride some inherited stuff.. */
  user-select: none;
 }
 
+#target {
+	overflow:hidden;
+}
+
 #target fieldset{
  width: 100%;
  overflow: hidden;
+}
+
+#AnswerEditForm #labelTextArea {
+	position: absolute;
+	display: none;
+	width: 525px;
+	height: 150px;
+	background: #fff;
+	padding:10px;
+	z-index: 9999;
+}
+
+#target .control-label {
+	float:none;
+	width: 100%;
+	text-align: left;
+}
+#target .control-group .controls {
+	margin-left:10px;
 }
 
 

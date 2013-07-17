@@ -3,6 +3,8 @@ var tokens = [];
 
 $(document).ready(function () {
 	
+	var labeleditor = CKEDITOR.instances['FakeLabelEditor'];
+	
 	$('#formOptionContent').children('div').not('.active').hide('slow');
 	
 	if($('#redirectSelect').val() == 'url') {
@@ -79,6 +81,31 @@ $(document).ready(function () {
 		token = '*| '+token+' |*';
 		repTokens(token,el);
 		
+	});
+	
+	$('#target').on('click', '#label', function(e) {
+		var offset = $(this).offset();
+		var target = $(this);
+		$(this).after('<a href="#" class="adv-label-editor">Advanced</a>');
+		$('#labelTextArea').css('left', offset.left+$(this).width()).css('top', offset.top+$(this).height());
+		$('#labelTextArea').on('click', '#ckeditorInsert', function(e){
+			target.val(labeleditor.getData());
+			$('#labelTextArea').css('display', 'none');
+			labeleditor.setData('');
+		});
+		$('#target').on('click', '.adv-label-editor', function(e) {
+			labeleditor.setData(target.val());
+			$('#labelTextArea').css('display', 'block');
+		});
+	});
+
+	$('#target').on('click', '.adv-label-editor', function(e) {
+		$('#labelTextArea').css('display', 'block');
+	});
+	
+	$('#target').on('click', '#ckeditorCancel', function(e){
+			$('#labelTextArea').css('display', 'none');
+			labeleditor.setData('');
 	});
 	
 	$(document).on('click', '#tokenRefresh', function(e) {

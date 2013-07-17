@@ -90,10 +90,14 @@
 				echo '</div></div>';
 				echo '<div class="row-fluid">';
 			    echo $this->Form->submit('Save Form', array('class' => 'btn pull-right'));
-			    echo $this->Form->end();
 				echo '</div>';
-				
 			?>
+			<div id="labelTextArea">
+				<?php echo $this->Form->input('Fake.labelEditor', array('type' => 'richtext')); ?>
+				<a class="btn" href="#" id="ckeditorInsert">Insert</a>
+				<a class="btn" href="#" id="ckeditorCancel">Cancel</a>
+			</div>
+			<?php echo $this->Form->end(); ?>
 		</div>
 	</div>
 </div>

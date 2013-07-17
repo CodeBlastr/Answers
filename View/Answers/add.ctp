@@ -119,11 +119,31 @@
 			<?php
 				echo '<div class="row-fluid">';
 				    	echo $this->Form->submit('Save Form', array('class' => 'btn pull-right'));
-				    	echo $this->Form->end();
+				    	
 				echo '</div>';
 			?>
+			<div id="labelTextArea">
+				<?php echo $this->Form->input('Fake.labelEditor', array('type' => 'richtext')); ?>
+				<a class="btn" href="#" id="ckeditorInsert">Insert</a>
+				<a class="btn" href="#" id="ckeditorCancel">Cancel</a>
+			</div>
+			<?php echo $this->Form->end(); ?>
 		</div>
 	</div>
 </div>
 
 <hr />
+
+<?php 
+// set the contextual menu items
+$items = array();
+if(!empty($this->request->data['Answer']['id'])) {
+	$items[] = $this->Html->link(__('View'), array('action' => 'view', $this->request->data['Answer']['id']), array('class' => 'view'));
+}
+
+$this->set('context_menu', array('menus' => array(
+	array(
+		'heading' => 'Forms',
+		'items' => $items,
+		),
+	))); ?>
