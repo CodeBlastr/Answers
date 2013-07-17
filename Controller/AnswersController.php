@@ -135,18 +135,17 @@ class _AnswersController extends AnswersAppController {
 			);
 		}
 		
-		$answers = Sanitize::clean($answers, array('encode' => true));
-		
+		App::uses('Sanitize', 'Utility');
+		$answers = Sanitize::clean($answers, array('encode' => false));
 		try {
 			if($this->AnswerAnswer->saveMany($answers)) {
-				$this->_submission($id);
+				//$this->_submission($id);
 				$this->Session->setFlash($message);
 				$this->Answer->process($id, $answers, $redirect);
 			}
 		}catch(Exception $e) {	
 			debug($e->getMessage());
 		}
-		
 		switch ($redirect) {
 				case 'form':
 					$this->redirect($this->referer());
