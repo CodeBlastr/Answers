@@ -85,6 +85,19 @@ class Answer extends AnswersAppModel {
 		$form = $this->find('first', array(
 			'conditions' => array('id' => $id),
 		));
+
+		// attempt to run the callback: foreign_model->afterAnswerProcess()
+		if ( !empty($form['Answer']['foreign_model']) ) {
+			try {
+				App::uses($form['Answer']['foreign_model'], ZuhaInflector::pluginize($form['Answer']['foreign_model']).'.Model');
+				$Model = new $form['Answer']['foreign_model'];
+				if ( method_exists($Model,'afterAnswerProcess') && is_callable(array($Model,'afterAnswerProcess')) ) {
+					$Model->afterAnswerProcess($form);
+				}
+			} catch (Exception $e) {
+				throw new Exception($e->getMessage());
+			}
+		}
 		
 		//Send Auto Responders
 		if($form['Answer']['auto_respond'] == 1) {
