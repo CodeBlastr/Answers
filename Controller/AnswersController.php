@@ -121,6 +121,7 @@ class _AnswersController extends AnswersAppController {
 	}
 	
 	public function formProcess () {
+		
 		if(empty($this->request->data)) {
 			throw new MethodNotAllowedException('No data');
 		}
@@ -143,6 +144,7 @@ class _AnswersController extends AnswersAppController {
 		
 		App::uses('Sanitize', 'Utility');
 		$answers = Sanitize::clean($answers, array('encode' => false));
+		
 		try {
 			if($this->AnswerAnswer->saveMany($answers)) {
 				//$this->_submission($id);
