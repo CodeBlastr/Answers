@@ -1,10 +1,8 @@
-<?php //debug(get_defined_constants()); ?>
-
 <div id="formBuilder">
 <div class="container">
   <div class="row clearfix">
     <!-- Building Form. -->
-    <div class="span6">
+    <div class="span12" style="padding:20px;">
       <div class="clearfix">
         <h2>Your Form</h2>
         <hr>
@@ -15,9 +13,13 @@
       </div>
     </div>
     <!-- / Building Form. -->
+  </div>
+</div> <!-- /container -->
 
-    <!-- Components -->
-    <div class="span6">
+<div id="formComponents">
+	<a class="btn" id="hideComponents">&times;</a>
+	<div class="compcon">
+ <!-- Components -->
       <h2>Drag & Drop components</h2>
       <hr>
       <div class="tabbable">
@@ -32,12 +34,11 @@
           </fieldset>
         </form>
       </div>
-    </div>
     <!-- / Components -->
-
-  </div>
-
-</div> <!-- /container -->
+    </div>
+   
+	
+</div> <!-- /formComponents -->
 </div>
 
 <hr />

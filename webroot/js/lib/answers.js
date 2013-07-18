@@ -115,6 +115,21 @@ $(document).ready(function () {
 		getTokens();
 	});
 	
+	$('#hideComponents').click(function(e) {
+		if($('#formComponents').hasClass('closed')) {
+			$('#formComponents').animate({
+				right: '0px'
+			});
+			$('#formComponents').removeClass('closed');
+		}else {
+			$('#formComponents').animate({
+				right: '-540px'
+			});
+			$('#formComponents').addClass('closed');
+		}
+		
+	});
+	
 	//Populates the token array when page loads
 	getTokens();
 	
