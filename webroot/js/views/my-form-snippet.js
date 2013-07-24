@@ -20,8 +20,9 @@ define([
       var that = this;
       //popover
       $(".popover").remove();
-      this.$el.popover("show");
-      $(".popover #save").on("click", this.saveHandler(that));
+	  this.$el.popover("show");
+	  //Click Handler for the buttons
+	  $(".popover #save").on("click", this.saveHandler(that));
       $(".popover #cancel").on("click", this.cancelHandler(that));
       //add drag event for all but form name
       if(this.model.get("title") !== "Form Name"){

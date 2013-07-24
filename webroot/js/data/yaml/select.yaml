@@ -1,5 +1,6 @@
 -
   title  : Select Basic
+  type   : select
   fields : 
     id:
       label  : ID / Name
@@ -47,6 +48,7 @@
           selected : false
 -
   title  : Select Multiple
+  type   : select
   fields : 
     id:
       label  : ID / Name

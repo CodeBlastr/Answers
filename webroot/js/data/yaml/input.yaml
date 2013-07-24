@@ -1,5 +1,6 @@
 -
   title  : Text Input
+  type   : textinput
   fields :
     id:
       label  : ID / Name
@@ -51,6 +52,7 @@
           selected : false
 -
   title  : Password Input
+  type   : textinput
   fields :
     id:
       label  : ID / Name
@@ -102,6 +104,7 @@
           selected : false
 -
   title  : Search Input
+  type   : textinput
   fields :
     id:
       label  : ID / Name
@@ -153,6 +156,7 @@
           selected : false
 -
   title  : Prepended Text
+  type   : textinput
   fields :
     id:
       label  : ID / Name
@@ -208,6 +212,7 @@
           selected : false
 -
   title  : Appended Text
+  type   : textinput
   fields :
     id:
       label  : ID / Name
@@ -263,6 +268,7 @@
           selected : false
 -
   title  : Prepended Checkbox
+  type   : textinput
   fields :
     id:
       label  : ID / Name
@@ -318,6 +324,7 @@
           selected : false
 -
   title  : Appended Checkbox
+  type   : checkbox
   fields :
     id:
       label  : ID / Name
@@ -428,6 +435,7 @@
           selected : false
 -
   title  : Text Area
+  type   : textinput
   fields :
     id:
       label  : ID / Name

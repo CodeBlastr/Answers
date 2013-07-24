@@ -111,7 +111,8 @@ We need to over-ride some inherited stuff.. */
  overflow: hidden;
 }
 
-#AnswerEditForm #labelTextArea {
+#AnswerEditForm #labelTextArea,
+#AnswerAddForm #labelTextArea {
 	position: absolute;
 	display: none;
 	width: 525px;

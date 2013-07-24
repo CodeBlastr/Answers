@@ -1,5 +1,6 @@
 -
   title  : Multiple Radios
+  type   : radio
   fields : 
     name:
       label  : Group Name
@@ -19,6 +20,7 @@
       value  : ["Option one", "Option two"]
 -
   title  : Multiple Radios Inline
+  type   : radio
   fields : 
     name:
       label  : Group Name
@@ -34,6 +36,7 @@
       value  : [1,2,3,4]
 -
   title  : Multiple Checkboxes
+  type   : checkbox
   fields : 
     name:
       label  : Group Name
@@ -49,6 +52,7 @@
       value  : ["Option one", "Option two"]
 -
   title  : Multiple Checkboxes Inline
+  type   : checkbox
   fields : 
     name:
       label  : Group Name

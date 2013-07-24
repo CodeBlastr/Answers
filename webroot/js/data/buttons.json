@@ -1,6 +1,7 @@
 [
   {
     "title": "File Button",
+    "type": "button",
     "fields": {
       "id": {
         "label": "ID / Name",
@@ -16,6 +17,7 @@
   },
   {
     "title": "Single Button",
+    "type": "button",
     "fields": {
       "id": {
         "label": "ID / Name",
@@ -77,6 +79,7 @@
   },
   {
     "title": "Double Button",
+    "type": "button",
     "fields": {
       "id": {
         "label": "Button 1 ID / Name",

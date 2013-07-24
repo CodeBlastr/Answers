@@ -1,6 +1,7 @@
 [
   {
     "title": "Multiple Radios",
+    "type": "radio",
     "fields": {
       "name": {
         "label": "Group Name",
@@ -29,6 +30,7 @@
   },
   {
     "title": "Multiple Radios Inline",
+    "type": "radio",
     "fields": {
       "name": {
         "label": "Group Name",
@@ -54,6 +56,7 @@
   },
   {
     "title": "Multiple Checkboxes",
+    "type": "checkbox",
     "fields": {
       "name": {
         "label": "Group Name",
@@ -77,6 +80,7 @@
   },
   {
     "title": "Multiple Checkboxes Inline",
+    "type": "checkbox",
     "fields": {
       "name": {
         "label": "Group Name",

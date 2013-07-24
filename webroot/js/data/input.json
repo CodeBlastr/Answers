@@ -1,6 +1,7 @@
 [
   {
     "title": "Text Input",
+    "type": "textinput",
     "fields": {
       "id": {
         "label": "ID / Name",
@@ -67,6 +68,7 @@
   },
   {
     "title": "Password Input",
+    "type": "textinput",
     "fields": {
       "id": {
         "label": "ID / Name",
@@ -133,6 +135,7 @@
   },
   {
     "title": "Search Input",
+    "type": "textinput",
     "fields": {
       "id": {
         "label": "ID / Name",
@@ -199,6 +202,7 @@
   },
   {
     "title": "Prepended Text",
+    "type": "textinput",
     "fields": {
       "id": {
         "label": "ID / Name",
@@ -270,6 +274,7 @@
   },
   {
     "title": "Appended Text",
+    "type": "textinput",
     "fields": {
       "id": {
         "label": "ID / Name",
@@ -341,6 +346,7 @@
   },
   {
     "title": "Prepended Checkbox",
+    "type": "textinput",
     "fields": {
       "id": {
         "label": "ID / Name",
@@ -412,6 +418,7 @@
   },
   {
     "title": "Appended Checkbox",
+    "type": "checkbox",
     "fields": {
       "id": {
         "label": "ID / Name",
@@ -558,6 +565,7 @@
   },
   {
     "title": "Text Area",
+    "type": "textinput",
     "fields": {
       "id": {
         "label": "ID / Name",
