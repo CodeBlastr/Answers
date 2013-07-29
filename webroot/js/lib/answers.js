@@ -55,9 +55,9 @@ $(document).ready(function () {
 		}		
 	});
 	
-	$('#target').on('change', '.popover-content #id', function(e) {
+	$('#target').on('change', '.popover-content #id, .popover-content #name', function(e) {
 		var id = $(this).val();
-		id = id.replace(" ", "_");
+		id = id.replace(/[!\"#$%&'\(\)\*\+,\.\/:;<=>\?\@\[\\\]\^`\{\|\}~ ]/g, '');
 		$(this).val(id);
 		var index = $.inArray(id, tokens);
 		if(index != -1) {

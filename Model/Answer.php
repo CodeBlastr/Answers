@@ -36,7 +36,7 @@ class Answer extends AnswersAppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	public $hasMany = array(
 		'AnswerSubmission' => array(
-			'className' => 'Answer.AnswerSubmission',
+			'className' => 'Answers.AnswerSubmission',
 			'foreignKey' => 'answer_id',
 			'dependent' => true,
 			'conditions' => '',
@@ -49,7 +49,7 @@ class Answer extends AnswersAppModel {
 			'counterQuery' => ''
 			),
 		'AnswerAnswer' => array(
-			'className' => 'Answer.AnswerAnswer',
+			'className' => 'Answers.AnswerAnswer',
 			'foreignKey' => 'answer_id',
 			'dependent' => true,
 			'conditions' => '',
@@ -62,7 +62,7 @@ class Answer extends AnswersAppModel {
 			'counterQuery' => ''
 			),
 		'AnswerStep' => array(
-			'className' => 'Answer.AnswerStep',
+			'className' => 'Answers.AnswerStep',
 			'foreignKey' => 'answer_id',
 			'dependent' => true,
 			),
@@ -76,7 +76,7 @@ class Answer extends AnswersAppModel {
 			'delete' => 'delete'
 		);
 		
-	public function process ($id = null, $answers) {
+	public function process ($form, $answers) {
 		
 		//If id is false check the id propery
 		if($id == null && isset($this->id)) {
@@ -84,24 +84,6 @@ class Answer extends AnswersAppModel {
 		}
 		if(empty($id)) {
 			throw new Exception(__('No Form Id'));
-		}
-		
-		//Get the form
-		$form = $this->find('first', array(
-			'conditions' => array('id' => $id),
-		));
-
-		// attempt to run the callback: foreign_model->afterAnswerProcess()
-		if ( !empty($form['Answer']['foreign_model']) ) {
-			try {
-				App::uses($form['Answer']['foreign_model'], ZuhaInflector::pluginize($form['Answer']['foreign_model']).'.Model');
-				$Model = new $form['Answer']['foreign_model'];
-				if ( method_exists($Model,'afterAnswerProcess') && is_callable(array($Model,'afterAnswerProcess')) ) {
-					$Model->afterAnswerProcess($form);
-				}
-			} catch (Exception $e) {
-				throw new Exception($e->getMessage());
-			}
 		}
 		
 		//Send Auto Responders

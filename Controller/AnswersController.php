@@ -42,11 +42,16 @@ class _AnswersController extends AnswersAppController {
 	public function add($foreignModel = null, $foreignKey = null) {
 			
 		if ( !empty($this->request->data) && $this->request->isPost() ) {
-			// associations!
-			if ( !empty($foreignModel) && !empty($foreignKey) ) {
-				$this->request->data['Answer']['foreign_model'] = $foreignModel;
-				$this->request->data['Answer']['foreign_key'] = $foreignKey;
+			$this->request->data['Answer']['plugin'] = ZuhaInflector::pluginize($this->request->data['Answer']['model']);
+			
+			//For right now I have the actions hard coded
+			if($this->request->data['Answer']['model'] == 'AnswerAnswer') {
+				$this->request->data['Answer']['action'] = 'saveAll';
+			}else {
+				$this->request->data['Answer']['action'] = 'save';
 			}
+			
+			
 			// saving!
 			if ( $this->Answer->save($this->request->data) ) {
 				$this->Session->setFlash('Form Saved');
@@ -68,7 +73,7 @@ class _AnswersController extends AnswersAppController {
 		
 	}
 	
-	public function view($id) {
+	public function view($id, $editId = null) {
 		if($id) {
 			$form = $this->Answer->find('first', array(
 				'conditions' => array('id' => $id),
@@ -78,6 +83,14 @@ class _AnswersController extends AnswersAppController {
 				}
 		if($form['Answer']['success_url'] == 'referrer') {
 			$form['Answer']['success_url'] = $this->referer();
+		}
+		if(!empty($editId)) {
+			$model = $form['Answer']['model'];
+			$plugin =  $form['Answer']['plugin'];
+			$this->loadModel($plugin.$model);
+			if(!$this->$model->exists($editId)) {
+				throw new MethodNotAllowedException('Record does not exist');
+			}
 		}
 			
 		$this->set('form', $form);
@@ -120,6 +133,16 @@ class _AnswersController extends AnswersAppController {
 		
 	}
 	
+	public function delete ($id = null) {
+		if(empty($id)) {
+			throw new Exception("Error Processing Request, No ID", 1);
+		}
+		
+		$this->Answer->delete($id);
+		$this->Session->setFlash('From Deleted');
+		$this->redirect($this->referer());
+	} 
+	
 	public function formProcess () {
 		
 		if(empty($this->request->data)) {
@@ -128,6 +151,10 @@ class _AnswersController extends AnswersAppController {
 		
 		// Grab the needed variables for the form and unset them
 		$id = $this->request->data['Answer']['id'];
+		$answer = $this->Answer->findById($id);
+		$model = $answer['Answer']['model'];
+		$plugin = $answer['Answer']['plugin'];
+		$action = $answer['Answer']['action'];
 		unset($this->request->data['Answer']['id']);
 		$message = !empty($this->request->data['Answer']['message']) ? $this->request->data['Answer']['message'] : 'The form has been submitted';
 		unset($this->request->data['Answer']['message']);
@@ -146,14 +173,20 @@ class _AnswersController extends AnswersAppController {
 		$answers = Sanitize::clean($answers, array('encode' => false));
 		
 		try {
-			if($this->AnswerAnswer->saveMany($answers)) {
+			if($model == 'AnswerAnswer') {
+				$this->$model->$action($answers);
+			}else {
+				$this->loadModel($plugin.'.'.$model);
+				$data[$model] = $this->request->data['Answer'];
+				$this->$model->$action($data);
+			}
 				//$this->_submission($id);
 				$this->Session->setFlash($message);
-				$this->Answer->process($id, $answers, $redirect);
-			}
+				$this->Answer->process($answer, $answers);
 		}catch(Exception $e) {	
 			debug($e->getMessage());
 		}
+		
 		switch ($redirect) {
 				case 'form':
 					$this->redirect($this->referer());
@@ -174,8 +207,11 @@ class _AnswersController extends AnswersAppController {
 	
 	protected function _getModels() {
 		$models = array(
-			'Answer' => 'Save to Database',
+			'AnswerAnswer' => 'Save to Database',
 		);
+		if(CakePlugin::loaded('Courses')) {
+			$models['CourseGradeAnswer'] = 'Save to Grade Table';
+		}
 		//Comented out not ready yet
 		// foreach(CakePlugin::loaded() as $model) {
 			// $models[$model] = $model;
@@ -192,7 +228,10 @@ class _AnswersController extends AnswersAppController {
 	public function getActions() {
 		$this->layout = null;
 		$plugin = $this->request->data['plugin'];
-		$actions = array('add' => 'Add to Database');
+		$actions = array(
+			'save' => 'Add to Database',
+			'saveMany' => 'Save all Answers'
+		);
 		
 		//Commented out because not used yet
 		// if(!empty($plugin)) {
@@ -317,6 +356,16 @@ class _AnswersController extends AnswersAppController {
 		}
 		
 		return $submit;
+	}
+	
+	protected function _flattenArrays($data) {
+		foreach($data as $key => $value) {
+			if(is_array($value)) {
+				$data[$key] = serialize($value);
+			}
+		}
+		
+		return $data;
 	}
     
 
