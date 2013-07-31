@@ -61,11 +61,6 @@ class Answer extends AnswersAppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 			),
-		'AnswerStep' => array(
-			'className' => 'Answers.AnswerStep',
-			'foreignKey' => 'answer_id',
-			'dependent' => true,
-			),
 		);
 		
 	public $methods = array(
