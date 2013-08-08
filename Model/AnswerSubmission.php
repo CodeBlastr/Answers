@@ -21,6 +21,13 @@ class AnswerSubmission extends AnswersAppModel {
 			),
 	);
 
+	public $belongsTo = array(
+		'Answer',
+		'User' => array(
+			'foreignKey' => 'creator_id'
+		)
+	);
+
 
 	/**
 	 * submission function - Create a sumbission if exists, else creates one
