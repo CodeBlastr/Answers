@@ -23,6 +23,10 @@ class _AnswerAnswer extends AnswersAppModel {
         'Answer' => array(
 			'className' => 'Answers.Answer',
             'foreignKey' => 'answer_id'
+		),
+        'AnswerSubmission' => array(
+			'className' => 'Answers.AnswerSubmission',
+            'foreignKey' => 'answer_sumbmission_id'
 		)
 	);
 	
