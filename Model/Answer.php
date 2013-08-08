@@ -74,7 +74,7 @@ class Answer extends AnswersAppModel {
 	public function process ($form, $answers) {
 		
 		//If id is false check the id propery
-		if($id == null && isset($this->id)) {
+		if($form['Answer']['id'] == null && isset($this->id)) {
 			$id = $this->id;
 		}
 		if(empty($id)) {
