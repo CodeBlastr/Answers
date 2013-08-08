@@ -7,7 +7,7 @@ class AnswerSubmission extends AnswersAppModel {
 
 	public $hasMany = array(
 		'AnswerAnswer' => array(
-			'className' => 'Answers.Answer',
+			'className' => 'Answers.AnswerAnswer',
 			'foreignKey' => 'answer_submission_id',
 			'dependent' => true,
 			'conditions' => '',
