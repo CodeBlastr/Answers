@@ -21,4 +21,32 @@ class AnswerSubmission extends AnswersAppModel {
 			),
 	);
 
+
+	/**
+	 * submission function - Create a sumbission if exists, else creates one
+	 * Increments the Submission Count
+	 *
+	 * @param $answerID -  The Answer(Form) ID
+	 * @return the count
+	 */
+	public function submit ($answerId) {
+		//get the user id
+		$uid = CakeSession::read('Auth.User.id');
+		$conditions = array('answer_id' => $answerId, 'creator_id' => $uid);
+		if($this->hasAny($conditions)) {
+			$answerSubmission = $this->find('first', array($conditions));
+		}else {
+			$answerSubmission = array('AnswerSubmission' => array(
+				'answer_id' => $answerId,
+				'count' => 0,
+				'from_ip' => $_SERVER['REMOTE_ADDR'],
+			));
+		}
+		//increment count
+		$answerSubmission['AnswerSubmission']['count'] = $answerSubmission['AnswerSubmission']['count'] + 1;
+		$this->save($answerSubmission);
+
+		return $answerSubmission['AnswerSubmission']['count'];
+	}
+
 }
