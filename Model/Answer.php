@@ -119,13 +119,16 @@ class Answer extends AnswersAppModel {
 			$answers = _cleanAnswers($answers);
 			
 			$emailto = $answers[$form['Answer']['auto_email']];
+
+			if ( !empty(CakeSession::read('Auth.User.email')) ) {
+				$emailto = CakeSession::read('Auth.User.email');
+			}
 			
 			$message['html'] = $this->_replaceTokens($this->_cleanAnswers($answers), $form['Answer']['auto_body']);
 			$from = array('info@educastic.com' => __SYSTEM_SITE_NAME);
 			$subject = $form['Answer']['auto_subject'];
-			foreach($addresses as $address) {
-				$this->__sendMail($address, $subject, $message);
-			}
+
+			$this->__sendMail($emailto, $subject, $message);
 	}
 	 
 	
