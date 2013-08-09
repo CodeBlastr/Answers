@@ -40,20 +40,20 @@ class AnswerSubmission extends AnswersAppModel {
 		//get the user id
 		$uid = CakeSession::read('Auth.User.id');
 		$conditions = array('answer_id' => $answerId, 'creator_id' => $uid);
-		if($this->hasAny($conditions)) {
-			$answerSubmission = $this->find('first', array($conditions));
-		}else {
+
+			$submissionCount = $this->find('count', array($conditions));
+
 			$answerSubmission = array('AnswerSubmission' => array(
 				'answer_id' => $answerId,
 				'count' => 0,
 				'from_ip' => $_SERVER['REMOTE_ADDR'],
 			));
-		}
+
 		//increment count
-		$answerSubmission['AnswerSubmission']['count'] = $answerSubmission['AnswerSubmission']['count'] + 1;
+		//$answerSubmission['AnswerSubmission']['count'] = $answerSubmission['AnswerSubmission']['count'] + 1;
 		$this->save($answerSubmission);
 
-		return $answerSubmission['AnswerSubmission']['count'];
+		return $submissionCount + 1;
 	}
 
 }

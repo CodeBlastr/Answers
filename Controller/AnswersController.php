@@ -284,12 +284,12 @@ class _AnswersController extends AnswersAppController {
 		//get the user id
 		$uid = $this->Session->read('Auth.User.id');
 		$conditions = array('answer_id' => $answerId, 'creator_id' => $uid);
-		$count = 0;
-		if($this->AnswerSubmission->hasAny($conditions)) {
-			$count = $this->AnswerSubmission->field('count', array($conditions));
-		}
+//		$count = 0;
+//		if($this->AnswerSubmission->hasAny($conditions)) {
+//			$count = $this->AnswerSubmission->field('count', array($conditions));
+//		}
 		
-		return $count;
+		return $this->AnswerSubmission->find('count', $conditions);
 	}
 
 /**
