@@ -138,7 +138,9 @@
 
 <?php 
 // set the contextual menu items
-$items = array();
+$items = array(
+	$this->Html->link('View All Forms', array('action' => 'index'))
+);
 if(!empty($this->request->data['Answer']['id'])) {
 	$items[] = $this->Html->link(__('View'), array('action' => 'view', $this->request->data['Answer']['id']), array('class' => 'view'));
 }
