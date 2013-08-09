@@ -120,8 +120,9 @@ class Answer extends AnswersAppModel {
 			
 			$emailto = $answers[$form['Answer']['auto_email']];
 
-			if ( !empty(CakeSession::read('Auth.User.email')) ) {
-				$emailto = CakeSession::read('Auth.User.email');
+			$userEmail = CakeSession::read('Auth.User.email');
+			if ( !empty($userEmail) ) {
+				$emailto = $userEmail;
 			}
 			
 			$message['html'] = $this->_replaceTokens($this->_cleanAnswers($answers), $form['Answer']['auto_body']);
