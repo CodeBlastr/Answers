@@ -51,7 +51,9 @@ class _AnswersController extends AnswersAppController {
 				$this->request->data['Answer']['action'] = 'save';
 			}
 			
-			
+			if(empty($this->request->data['Answer']['allowed_user_submissions'])) {
+				$this->request->data['Answer']['allowed_user_submissions'] = 0;
+			}
 			// saving!
 			if ( $this->Answer->save($this->request->data) ) {
 				$this->Session->setFlash('Form Saved');
