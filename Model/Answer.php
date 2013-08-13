@@ -74,8 +74,10 @@ class Answer extends AnswersAppModel {
 	public function process ($form, $answers) {
 		
 		//If id is false check the id propery
-		if($id == null && isset($this->id)) {
+		if($form['Answer']['id'] == null && isset($this->id)) {
 			$id = $this->id;
+		} else {
+			$id = $form['Answer']['id'];
 		}
 		if(empty($id)) {
 			throw new Exception(__('No Form Id'));
@@ -102,7 +104,7 @@ class Answer extends AnswersAppModel {
 		if(!empty($form['Answer']['response_email'])) {
 			$addresses = explode(',', str_replace(' ', '' , $form['Answer']['response_email']));
 			$message['html'] = $this->_replaceTokens($this->_cleanAnswers($answers), $form['Answer']['response_body']);
-			$from = array('info@educastic.com' => __SYSTEM_SITE_NAME);
+			//$from = array('info@educastic.com' => __SYSTEM_SITE_NAME);
 			$subject = $form['Answer']['response_subject'];
 			foreach($addresses as $address) {
 				$this->__sendMail($address, $subject, $message);
@@ -116,16 +118,20 @@ class Answer extends AnswersAppModel {
 	
 	private function _sendAutoResponseMail ($form, $answers) {
 			
-			$answers = _cleanAnswers($answers);
-			
+			$answers = $this->_cleanAnswers($answers);
+			//debug($answers);break;
 			$emailto = $answers[$form['Answer']['auto_email']];
-			
-			$message['html'] = $this->_replaceTokens($this->_cleanAnswers($answers), $form['Answer']['auto_body']);
-			$from = array('info@educastic.com' => __SYSTEM_SITE_NAME);
-			$subject = $form['Answer']['auto_subject'];
-			foreach($addresses as $address) {
-				$this->__sendMail($address, $subject, $message);
+
+			$userEmail = CakeSession::read('Auth.User.email');
+			if ( !empty($userEmail) ) {
+				$emailto = $userEmail;
 			}
+			
+			$message['html'] = $this->_replaceTokens($answers, $form['Answer']['auto_body']);
+			//$from = array('info@educastic.com' => __SYSTEM_SITE_NAME);
+			$subject = $form['Answer']['auto_subject'];
+
+			$this->__sendMail($emailto, $subject, $message);
 	}
 	 
 	

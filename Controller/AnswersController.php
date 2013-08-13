@@ -278,37 +278,20 @@ class _AnswersController extends AnswersAppController {
 	 * @param $answerID -  The Answer(Form) ID
 	 * @return the count
 	 */
-	
 	protected function _submission ($answerId) {
-		//get the user id
-		$uid = $this->Session->read('Auth.User.id');
-		$conditions = array('answer_id' => $answerId, 'creator_id' => $uid);
-		if($this->AnswerSubmission->hasAny($conditions)) {
-			$answerSubmission = $this->AnswerSubmission->find('first', array($conditions));
-		}else {
-			$answerSubmission = array('AnswerSubmission' => array(
-				'answer_id' => $answerId,
-				'count' => 0,
-				'from_ip' => $_SERVER['REMOTE_ADDR'],
-			));
-		}
-		//increment count
-		$answerSubmission['AnswerSubmission']['count'] = $answerSubmission['AnswerSubmission']['count'] + 1;
-		$this->AnswerSubmission->save($answerSubmission);
-		
-		return $answerSubmission['AnswerSubmission']['count'];
+		return $this->AnswerSubmission->submit($answerId);
 	}
 	
 	protected function _submissionCount ($answerId) {
 		//get the user id
 		$uid = $this->Session->read('Auth.User.id');
 		$conditions = array('answer_id' => $answerId, 'creator_id' => $uid);
-		$count = 0;
-		if($this->AnswerSubmission->hasAny($conditions)) {
-			$count = $this->AnswerSubmission->field('count', array($conditions));
-		}
+//		$count = 0;
+//		if($this->AnswerSubmission->hasAny($conditions)) {
+//			$count = $this->AnswerSubmission->field('count', array($conditions));
+//		}
 		
-		return $count;
+		return $this->AnswerSubmission->find('count', $conditions);
 	}
 
 /**
