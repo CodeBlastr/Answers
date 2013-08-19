@@ -63,6 +63,17 @@ class Answer extends AnswersAppModel {
 			),
 		);
 		
+	public $belongsTo = array(
+		'Creator' => array(
+			'className' => 'Users.User',
+			'foreignKey' => 'creator_id'
+		),
+		'Modifier' => array(
+			'className' => 'Users.User',
+			'foreignKey' => 'modifier_id'
+		)
+	);
+		
 	public $methods = array(
 			'post' => 'post',
 			'get' => 'get',

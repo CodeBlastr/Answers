@@ -1,6 +1,11 @@
 <?php
 App::uses('AnswersAppController', 'Answers.Controller');
 
+/**
+ * Extension Code
+ * $refuseInit = true; require_once(ROOT.DS.'app'.DS.'Plugin'.DS.'Answers'.DS.'Controller'.DS.'AnswersController.php');
+ */
+
 class _AnswersController extends AnswersAppController {
     
 /**
