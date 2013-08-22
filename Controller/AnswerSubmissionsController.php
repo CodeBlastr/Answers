@@ -50,8 +50,8 @@ class _AnswerSubmissionsController extends AnswersAppController {
 			$this->redirect($this->referer());
 		}
 
-		$this->AnswerSubmission->id = $id;
 		$data = $this->AnswerSubmission->find('first', array(
+			'conditions' => array('AnswerSubmission.id' => $id),
 			'contain' => array(
 				'AnswerAnswer',
 				'User' => array(
