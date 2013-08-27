@@ -1,7 +1,12 @@
 <?php
 App::uses('AnswersAppModel', 'Answers.Model');
 
-class Answer extends AnswersAppModel {
+/**
+ * Extension Code
+ * $refuseInit = true; require_once(ROOT.DS.'app'.DS.'Plugin'.DS.'Answers'.DS.'Model'.DS.'Answer.php');
+ */
+
+class _Answer extends AnswersAppModel {
 	
 	public $name = 'Answer';
 	
@@ -175,4 +180,8 @@ class Answer extends AnswersAppModel {
 		return $str;
 	}
 
+}
+
+if (!isset($refuseInit)) {
+	class Answer extends _Answer {}
 }
