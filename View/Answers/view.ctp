@@ -34,6 +34,7 @@ $this->set('context_menu', array('menus' => array(
 			$this->Html->link(__('Edit'), array('action' => 'edit', $form['Answer']['id']), array('class' => 'edit')),
 			$this->Html->link(__('Add'), array('action' => 'add'), array('class' => 'add')),
 			$this->Html->link(__('List'), array('action' => 'index'), array('class' => 'index')),
+			$this->Html->link(__('Download CSV'), array('action' => 'answersubmissions', $form['Answer']['id'].'.csv')),
 			)
 		),
 	))); ?>

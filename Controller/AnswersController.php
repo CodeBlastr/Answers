@@ -348,6 +348,37 @@ class _AnswersController extends AnswersAppController {
 		return $submit;
 	}
 	
+	/**
+	 * Quick Function for CSV downloads of all form submissions
+	 * @todo there is a better way to to this, See new code in submissions, 
+	 */
+	
+	public function answersubmissions($id = false) {
+		if($id) {
+			$answers = $this->Answer->AnswerAnswer->find('all', array('answer_id' => $id));
+			$cleanarray = array();
+			if(!empty($answers)) {
+				foreach ($answers as $i => $v) {
+					$answers[$i]['AnswerAnswer']['value'] = unserialize($answers[$i]['AnswerAnswer']['value']);
+					$answers[$i]['AnswerAnswer']['created'] = date('Y-M-d H:i', strtotime($answers[$i]['AnswerAnswer']['created']));
+					if(!key_exists($answers[$i]['AnswerAnswer']['created'], $cleanarray)) {
+						$cleanarray[$answers[$i]['AnswerAnswer']['created']] = array('date_created' => $answers[$i]['AnswerAnswer']['created']);
+					}
+					if(!key_exists($answers[$i]['AnswerAnswer']['form_input_name'], $cleanarray[$answers[$i]['AnswerAnswer']['created']])) {
+						$cleanarray[$answers[$i]['AnswerAnswer']['created']][$answers[$i]['AnswerAnswer']['form_input_name']];
+					}
+					$cleanarray[$answers[$i]['AnswerAnswer']['created']][$answers[$i]['AnswerAnswer']['form_input_name']] = $answers[$i]['AnswerAnswer']['value'];
+				}
+			}
+			//One More Loop to set the indexes
+			$indexedarr = array();
+			foreach($cleanarray as $item) {
+				$indexedarr[] = $item;
+			}
+			$this->set('answers', $indexedarr);
+		}
+	}
+	
 	protected function _flattenArrays($data) {
 		foreach($data as $key => $value) {
 			if(is_array($value)) {
