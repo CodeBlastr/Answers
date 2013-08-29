@@ -97,18 +97,19 @@ class _Answer extends AnswersAppModel {
 		}
 		if(empty($id)) {
 			throw new Exception(__('No Form Id'));
+			return false;
 		}
-		
 		//Send Auto Responders
-		if($form['Answer']['auto_respond'] == 1) {
+		if($form['Answer']['auto_respond'] == 1 && !empty($form['Answer']['auto_email'])) {
 			$this->_sendAutoResponseMail($form, $answers);
 		}
 			
 		//Send Emails if set
-		if($form['Answer']['send_email'] == 1 && !empty($form['Answer']['auto_email'])) {
+		if($form['Answer']['send_email'] == 1 && !empty($form['Answer']['response_email'])) {
 			
 			$this->_sendResponseMail($form, $answers);
 		}
+		return true;
 		
 	}
 
@@ -116,7 +117,7 @@ class _Answer extends AnswersAppModel {
  * Send Emails to notifiees
  */
 	
-	private function _sendResponseMail ($form, $answers) {
+	protected function _sendResponseMail ($form, $answers) {
 		if(!empty($form['Answer']['response_email'])) {
 			$addresses = explode(',', str_replace(' ', '' , $form['Answer']['response_email']));
 			$message['html'] = $this->_replaceTokens($this->_cleanAnswers($answers), $form['Answer']['response_body']);
@@ -132,14 +133,14 @@ class _Answer extends AnswersAppModel {
 	 * Send Autoresponses
 	 */
 	
-	private function _sendAutoResponseMail ($form, $answers) {
+	protected function _sendAutoResponseMail ($form, $answers) {
 			
 			$answers = $this->_cleanAnswers($answers);
 			//debug($answers);break;
 			$emailto = $answers[$form['Answer']['auto_email']];
 
 			$userEmail = CakeSession::read('Auth.User.email');
-			if ( !empty($userEmail) ) {
+			if ( !empty($userEmail) && empty($emailto)) {
 				$emailto = $userEmail;
 			}
 			
@@ -157,7 +158,7 @@ class _Answer extends AnswersAppModel {
 	 * @return array keyed by input => value
 	 */
 	
-	private function _cleanAnswers ($answers) {
+	protected function _cleanAnswers ($answers) {
 		$arr = array();
 		foreach($answers as $answer) {
 			$arr[$answer['form_input_name']] = $answer['value'];
@@ -172,7 +173,7 @@ class _Answer extends AnswersAppModel {
 	 * @param $str string to replace tokens in
 	 * @return returns string with tokens replaced
 	 */
-	private function _replaceTokens ($arr, $str) {
+	protected function _replaceTokens ($arr, $str) {
 		foreach($arr as $token => $value) {
 			$token = '*| '.$token. ' |*';
 			$str = str_replace($token, $value, $str);
