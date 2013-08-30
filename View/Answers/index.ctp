@@ -50,7 +50,7 @@ foreach ($forms as $group):
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $group['Answer']['id'])); ?>
 			<?php echo $this->Html->link(__('Copy'), array('action' => 'copy', $group['Answer']['id'])); ?>
 			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $group['Answer']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $group['Form']['id'])); ?>
-			<?php echo $this->Html->link(__('CSV'), array('action' => 'answersubmissions', $form['Answer']['id'].'.csv')); ?>
+			<?php echo $this->Html->link(__('CSV'), array('action' => 'answersubmissions', $group['Answer']['id'].'.csv')); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
