@@ -315,6 +315,7 @@ class _AnswersController extends AnswersAppController {
 		$this->layout = null;
 		$this->set('form', $form);
 		$this->set('submit', $this->_checkSubmissions($form));
+		$this->set('showtitle', false);
 		$html = $this->render('view');
 	}
 
