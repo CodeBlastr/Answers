@@ -168,11 +168,12 @@ class _AnswersController extends AnswersAppController {
 		$redirect = $this->request->data['Answer']['redirect'];
 		unset($this->request->data['Answer']['redirect']);
 		$answers = array();
+		$answerdata = json_decode($answer['Answer']['content_json']);
 		foreach($this->request->data['Answer'] as $key => $value) {
 			$answers[] = array(
 				'answer_id' => $id,
 				'form_input_name' => $key,
-				'value' => $value,
+				'value' => is_array($value) ? implode(' / ', $value) : $value,
 			);
 		}
 		
