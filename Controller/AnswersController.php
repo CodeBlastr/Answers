@@ -110,6 +110,11 @@ class _AnswersController extends AnswersAppController {
 		$this->view = 'add';
 		
 		if(!empty($this->request->data)) {
+			//needed to do this so if we pasted content into the html field it wouldn't delete it
+			if(empty($this->request->data['Answer']['content']) || strlen($this->request->data['Answer']['content']) < 30) {
+				unset($this->request->data['Answer']['content']);
+			}
+			
 			if($this->Answer->save($this->request->data)) {
 				$this->Session->setFlash('Form Saved');
 				$this->redirect($this->referer());
@@ -357,7 +362,8 @@ class _AnswersController extends AnswersAppController {
 	
 	public function answersubmissions($id = false) {
 		if($id) {
-			$answers = $this->Answer->AnswerAnswer->find('all', array('answer_id' => $id));
+			$answers = $this->Answer->AnswerAnswer->find('all', array('conditions' => array('answer_id' => $id)));
+			
 			$cleanarray = array();
 			if(!empty($answers)) {
 				foreach ($answers as $i => $v) {
