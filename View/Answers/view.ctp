@@ -16,7 +16,7 @@
 		echo $this->Form->hidden('Answer.redirect', array('value' => $form['Answer']['success_url']));
 		echo $this->Form->hidden('Answer.message', array('value' => $form['Answer']['success_message']));
 		echo $form['Answer']['content'];
-		echo $this->Form->submit('Submit');
+		echo $this->Form->submit('Submit', array('class' => 'btn btn-primary'));
 		echo $this->Form->end();
 	  }else {
 	  	echo '<script>function goBack(){window.history.back()}</script>';
