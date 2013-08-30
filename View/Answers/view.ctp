@@ -1,5 +1,7 @@
 <div class="row-fluid">
+	<?php if(!isset($showtitle)): ?>
 	<h3><?php echo $form['Answer']['title']; ?></h3>
+	<?php endif; ?>
 	
 	<?php if($this->Session->read('Message.formmessage')): ?>
 		<div class="alert">
