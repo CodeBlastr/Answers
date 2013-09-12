@@ -27,7 +27,13 @@ class _AnswerSubmission extends AnswersAppModel {
 			'foreignKey' => 'creator_id'
 		)
 	);
-
+	
+	public function __construct($id = false, $table = null, $ds = null) {
+		if (CakePlugin::loaded('Media')) {
+			$this->actsAs[] = 'Media.MediaAttachable';
+		}
+		parent::__construct($id, $table, $ds);
+	}
 
 	/**
 	 * submission function - Create a sumbission if exists, else creates one
