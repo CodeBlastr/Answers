@@ -1,7 +1,7 @@
 <?php
 App::uses('AnswersAppModel', 'Answers.Model');
 
-class AnswerSubmission extends AnswersAppModel {
+class _AnswerSubmission extends AnswersAppModel {
 	
 	public $name = 'AnswerSubmission';
 
@@ -56,4 +56,8 @@ class AnswerSubmission extends AnswersAppModel {
 		return $submissionCount + 1;
 	}
 
+}
+
+if (!isset($refuseInit)) {
+	class AnswerSubmission extends _AnswerSubmission {}
 }
