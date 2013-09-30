@@ -75,8 +75,7 @@ class _AnswersController extends AnswersAppController {
 		$this->set('urls', $urls);
 		$this->set('title_for_layout', 'Form Buildrr - add a new form');
 		$this->layout = 'formbuilder';
-			
-		
+
 	}
 	
 	public function view($id, $editId = null) {
