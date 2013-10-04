@@ -121,7 +121,6 @@ class _Answer extends AnswersAppModel {
 		if(!empty($form['Answer']['response_email'])) {
 			$addresses = explode(',', str_replace(' ', '' , $form['Answer']['response_email']));
 			$message['html'] = $this->_replaceTokens($this->_cleanAnswers($answers), $form['Answer']['response_body']);
-			//$from = array('info@educastic.com' => __SYSTEM_SITE_NAME);
 			$subject = $form['Answer']['response_subject'];
 			foreach($addresses as $address) {
 				$this->__sendMail($address, $subject, $message);
@@ -145,7 +144,6 @@ class _Answer extends AnswersAppModel {
 			}
 			
 			$message['html'] = $this->_replaceTokens($answers, $form['Answer']['auto_body']);
-			//$from = array('info@educastic.com' => __SYSTEM_SITE_NAME);
 			$subject = $form['Answer']['auto_subject'];
 
 			$this->__sendMail($emailto, $subject, $message);
