@@ -77,6 +77,8 @@
 			    	echo $this->Form->input('Answer.allowed_user_submissions', array('label' => 'Allowed User Submissions', 'type' => 'text'));
 					echo '<p>If set to 0 users can submit unlimited times, if guest can submit form this has no effect</p>';
 					echo $this->Element('forms/alias', array('formId' => '#AnswerAddForm', 'nameInput' => '#AnswerTitle', 'prefix' => 'form/')); // must have the alias behavior attached to work
+					echo $this->Form->label('Submit Button text');
+					echo $this->Form->input('Answer.submit_button_text', array('label' => false, 'placeholder' => 'Submit'));
 			    echo '</div>';
 				
 				

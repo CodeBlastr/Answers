@@ -13,12 +13,13 @@
 	
 	<?php
 	  if($submit) {
+	  	$submitButtonText = !empty($form['Answer']['submit_button_text']) ? $form['Answer']['submit_button_text'] : 'Submit';
 		echo $this->Form->create('Answers.Answer', array('url' => array('plugin' => 'answers', 'controller' => 'answers', 'action' => 'formProcess')));
 		echo $this->Form->hidden('Answer.id', array('value' => $form['Answer']['id']));
 		echo $this->Form->hidden('Answer.redirect', array('value' => $form['Answer']['success_url']));
 		echo $this->Form->hidden('Answer.message', array('value' => $form['Answer']['success_message']));
 		echo $form['Answer']['content'];
-		echo $this->Form->submit('Submit', array('class' => 'btn btn-primary'));
+		echo $this->Form->submit($submitButtonText, array('class' => 'btn btn-primary'));
 		echo $this->Form->end();
 	  }else {
 	  	echo '<script>function goBack(){window.history.back()}</script>';
