@@ -361,17 +361,22 @@ class _AnswersController extends AnswersAppController {
 	public function answersubmissions($id = false) {
 		if($id) {
 			$answers = $this->Answer->AnswerAnswer->find('all', array('conditions' => array('answer_id' => $id)));
-			
+			$answer = $this->Answer->findById($id);
+			$json = json_decode($answer['Answer']['content_json']);
+			$fields = array();
+			foreach($json as $j) {
+				$fields[] = $j->fields->id->value;
+			}
 			$cleanarray = array();
 			if(!empty($answers)) {
 				$index = 0;
-				$prev = 0;
+				$total = count($fields);
+				$count = 1;
 				foreach ($answers as $i => $v) {
-					$next = strtotime($answers[$i]['AnswerAnswer']['created']);
-					if($next > $prev+10 && $next > $prev-10) {
+					if($count == $total) {
 						$index++;
+						$count = 0;
 					}
-					$prev = $next;
 					$answers[$i]['AnswerAnswer']['value'] = unserialize($answers[$i]['AnswerAnswer']['value']);
 					$answers[$i]['AnswerAnswer']['created'] = date('Y-M-d H:i:s', strtotime($answers[$i]['AnswerAnswer']['created']));
 					if(!key_exists($index, $cleanarray)) {
@@ -381,6 +386,7 @@ class _AnswersController extends AnswersAppController {
 						$cleanarray[$index][$answers[$i]['AnswerAnswer']['form_input_name']];
 					}
 					$cleanarray[$index][$answers[$i]['AnswerAnswer']['form_input_name']] = $answers[$i]['AnswerAnswer']['value'];
+					$count++;
 				}
 			}
 			
