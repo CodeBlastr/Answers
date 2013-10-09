@@ -364,16 +364,22 @@ class _AnswersController extends AnswersAppController {
 			
 			$cleanarray = array();
 			if(!empty($answers)) {
+				$index = 0;
+				$prev = 0;
 				foreach ($answers as $i => $v) {
+					$next = strtotime($answers[$i]['AnswerAnswer']['created']);
+					if(!($next < $prev+10 && $next > $prev-10)) {
+						$index++;
+					}
 					$answers[$i]['AnswerAnswer']['value'] = unserialize($answers[$i]['AnswerAnswer']['value']);
-					$answers[$i]['AnswerAnswer']['created'] = date('Y-M-d H:i', strtotime($answers[$i]['AnswerAnswer']['created']));
-					if(!key_exists($answers[$i]['AnswerAnswer']['created'], $cleanarray)) {
-						$cleanarray[$answers[$i]['AnswerAnswer']['created']] = array('date_created' => $answers[$i]['AnswerAnswer']['created']);
+					$answers[$i]['AnswerAnswer']['created'] = date('Y-M-d H:i:s', strtotime($answers[$i]['AnswerAnswer']['created']));
+					if(!key_exists($index, $cleanarray)) {
+						$cleanarray[$index] = array('date_created' => $answers[$i]['AnswerAnswer']['created']);
 					}
-					if(!key_exists($answers[$i]['AnswerAnswer']['form_input_name'], $cleanarray[$answers[$i]['AnswerAnswer']['created']])) {
-						$cleanarray[$answers[$i]['AnswerAnswer']['created']][$answers[$i]['AnswerAnswer']['form_input_name']];
+					if(!key_exists($answers[$i]['AnswerAnswer']['form_input_name'], $cleanarray[$index])) {
+						$cleanarray[$index][$answers[$i]['AnswerAnswer']['form_input_name']];
 					}
-					$cleanarray[$answers[$i]['AnswerAnswer']['created']][$answers[$i]['AnswerAnswer']['form_input_name']] = $answers[$i]['AnswerAnswer']['value'];
+					$cleanarray[$index][$answers[$i]['AnswerAnswer']['form_input_name']] = $answers[$i]['AnswerAnswer']['value'];
 				}
 			}
 			//One More Loop to set the indexes
