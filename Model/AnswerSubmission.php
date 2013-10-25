@@ -2,9 +2,9 @@
 App::uses('AnswersAppModel', 'Answers.Model');
 
 class AppAnswerSubmission extends AnswersAppModel {
-	
+
 	public $name = 'AnswerSubmission';
-	
+
 	public $hasMany = array(
 		'AnswerAnswer' => array(
 			'className' => 'Answers.AnswerAnswer',

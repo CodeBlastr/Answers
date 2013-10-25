@@ -1,9 +1,9 @@
 <?php
 App::uses('AnswersAppModel', 'Answers.Model');
 class AppAnswerAnswer extends AnswersAppModel {
-	
+
 	public $name = 'AnswerAnswer';
-	
+
 	public $belongsTo = array(
 		'Creator' => array(
 			'className' => 'Users.User',
@@ -22,6 +22,7 @@ class AppAnswerAnswer extends AnswersAppModel {
 			'foreignKey' => 'answer_sumbmission_id'
 		)
 	);
+
 	public function beforeSave($options = array()) {
 		$this->data['AnswerAnswer']['value'] = serialize($this->data['AnswerAnswer']['value']);
 		return true;

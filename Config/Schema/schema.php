@@ -100,6 +100,7 @@ class AnswersSchema extends CakeSchema {
 			'engine' => 'MyISAM'
 		)
 	);
+
 	public $answer_submissions = array(
 		'id' => array(
 			'type' => 'integer',
@@ -171,6 +172,7 @@ class AnswersSchema extends CakeSchema {
 			'engine' => 'MyISAM'
 		)
 	);
+
 	public $answers = array(
 		'id' => array(
 			'type' => 'string',

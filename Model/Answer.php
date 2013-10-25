@@ -41,6 +41,13 @@ class AppAnswer extends AnswersAppModel {
 		'delete' => 'delete'
 	);
 
+/**
+ * Process method
+ * 
+ * @param 
+ * @param
+ * @throws Exception
+ */
 	public function process($form, $answers) {
 		//If id is false check the id propery
 		if ($form['Answer']['id'] == null && isset($this->id)) {
@@ -50,7 +57,6 @@ class AppAnswer extends AnswersAppModel {
 		}
 		if (empty($id)) {
 			throw new Exception(__('No Form Id'));
-			return false;
 		}
 		//Send Auto Responders
 		if ($form['Answer']['auto_respond'] == 1 && !empty($form['Answer']['auto_email'])) {
@@ -124,6 +130,6 @@ class AppAnswer extends AnswersAppModel {
 }
 
 if (!isset($refuseInit)) {
-	class Answer extends _Answer {
+	class Answer extends AppAnswer {
 	}
 }

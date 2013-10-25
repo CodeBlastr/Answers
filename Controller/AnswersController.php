@@ -73,6 +73,15 @@ class AppAnswersController extends AnswersAppController {
 		$this->layout = 'formbuilder';
 	}
 
+/**
+ * View method
+ * 
+ * @param uuid
+ * @param uuid
+ * @throws MethodNotAllowedException
+ * @throws NotFoundException
+ * @throws Exception
+ */
 	public function view($id, $editId = null) {
 		if ($id) {
 			$form = $this->Answer->find('first', array('conditions' => array('id' => $id), ));
