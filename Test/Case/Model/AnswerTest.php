@@ -1,12 +1,11 @@
 <?php
-
-App::uses('Answer', 'Answers.Model');
 /**
  * Answer model test cases
  *
  * @package 	answers
  * @subpackage	answers.tests.cases.models
  */
+App::uses('Answer', 'Answers.Model');
 class AnswerTestCase extends CakeTestCase {
 
 /**
