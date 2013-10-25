@@ -216,8 +216,10 @@ class AppAnswersController extends AnswersAppController {
 /**
  * Function to load all models with behavior attached to them
  *
+ * @codingStandardsIgnoreStart
  * @todo Need to come up with a way to register and cache those models.
  * Right now the model only returns the AnswerAnswer Model to save
+ * @codingStandardsIgnoreEnd
  */
 	protected function _getModels() {
 		$models = array('AnswerAnswer' => 'Save to Database', );
@@ -353,7 +355,10 @@ class AppAnswersController extends AnswersAppController {
 
 /**
  * Quick Function for CSV downloads of all form submissions
- * @todo there is a better way to to this, See new code in submissions,
+ * 
+ * @codingStandardsIgnoreStart
+ * @todo there is a better way to to this, See new code in submissions
+ * @codingStandardsIgnoreEnd
  */
 	public function answersubmissions($id = false) {
 		if ($id) {
