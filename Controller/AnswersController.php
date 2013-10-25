@@ -40,7 +40,9 @@ class AppAnswersController extends AnswersAppController {
 	}
 
 /**
- * Add Function
+ * Add method
+ * 
+ * @throws MethodNotAllowedException
  */
 	public function add($foreignModel = null, $foreignKey = null) {
 		if (!empty($this->request->data) && $this->request->isPost()) {
@@ -78,9 +80,8 @@ class AppAnswersController extends AnswersAppController {
  * 
  * @param uuid
  * @param uuid
- * @throws MethodNotAllowedException
  * @throws NotFoundException
- * @throws Exception
+ * @throws MethodNotAllowedException
  */
 	public function view($id, $editId = null) {
 		if ($id) {
@@ -103,6 +104,13 @@ class AppAnswersController extends AnswersAppController {
 		$this->set('submit', $this->_checkSubmissions($form));
 	}
 
+/**
+ * Edit method
+ * 
+ * @param uuid
+ * @throws MethodNotAllowedException
+ * @throws NotFoundException
+ */
 	public function edit($id) {
 		$this->view = 'add';
 		if (!empty($this->request->data)) {
@@ -136,6 +144,11 @@ class AppAnswersController extends AnswersAppController {
 		$this->layout = 'formbuilder';
 	}
 
+/**
+ * Delete method
+ * 
+ * @throws Exception
+ */
 	public function delete($id = null) {
 		if (empty($id)) {
 			throw new Exception("Error Processing Request, No ID", 1);
@@ -145,6 +158,11 @@ class AppAnswersController extends AnswersAppController {
 		$this->redirect($this->referer());
 	}
 
+/**
+ * formProcess method
+ * 
+ * @throws MethodNotAllowedException
+ */
 	public function formProcess() {
 		if (empty($this->request->data)) {
 			throw new MethodNotAllowedException('No data');
@@ -290,6 +308,7 @@ class AppAnswersController extends AnswersAppController {
  *
  * @param {id}			The form id to call.
  * @return {string} 	Rendered From View
+ * @throws NotFoundException
  */
 	public function display($id) {
 		$this->Answer->id = $id;

@@ -1,6 +1,6 @@
 <?php
-App::uses('Answer', 'Answers.Model');
 
+App::uses('Answer', 'Answers.Model');
 /**
  * Answer model test cases
  *
