@@ -24,7 +24,7 @@ class AnswerTestCase extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		//$this->Answer = ClassRegistry::init('Answers.Answer');
+		$this->Answer = ClassRegistry::init('Answers.Answer');
 	}
 
 /**
@@ -34,17 +34,18 @@ class AnswerTestCase extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
-		//unset($this->Answer);
+		unset($this->Answer);
 		ClassRegistry::flush();
 		parent::tearDown();
 	}
 
 /**
- * Test adding a Category 
+ * Test adding a Category
  *
  * @return void
  */
 	public function testAdd() {
 		$this->assertTrue(true);
 	}
+
 }

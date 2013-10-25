@@ -1,4 +1,6 @@
-Answers-Zuha-Cakephp-Plugin
+Answer Plugin for Zuha (Open Source CMS built on CakePHP)
 ===========================
 
-custom forms plugin
+A custom forms plugin.
+
+[![Build Status](https://travis-ci.org/zuha/Answers-Zuha-Cakephp-Plugin.png?branch=master)](https://travis-ci.org/zuha/Answers-Zuha-Cakephp-Plugin)
