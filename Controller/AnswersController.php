@@ -100,7 +100,9 @@ class AppAnswersController extends AnswersAppController {
 				throw new MethodNotAllowedException('Record does not exist');
 			}
 		}
+		
 		$this->set('form', $form);
+		$this->set('submitButtonText', !empty($form['Answer']['submit_button_text']) ? $form['Answer']['submit_button_text'] : 'Submit');
 		$this->set('submit', $this->_checkSubmissions($form));
 	}
 
