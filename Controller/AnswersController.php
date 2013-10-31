@@ -41,7 +41,7 @@ class AppAnswersController extends AnswersAppController {
 
 /**
  * Add method
- * 
+ *
  * @throws MethodNotAllowedException
  */
 	public function add($foreignModel = null, $foreignKey = null) {
@@ -77,7 +77,7 @@ class AppAnswersController extends AnswersAppController {
 
 /**
  * View method
- * 
+ *
  * @param uuid
  * @param uuid
  * @throws NotFoundException
@@ -100,7 +100,6 @@ class AppAnswersController extends AnswersAppController {
 				throw new MethodNotAllowedException('Record does not exist');
 			}
 		}
-		
 		$this->set('form', $form);
 		$this->set('submitButtonText', !empty($form['Answer']['submit_button_text']) ? $form['Answer']['submit_button_text'] : 'Submit');
 		$this->set('submit', $this->_checkSubmissions($form));
@@ -108,7 +107,7 @@ class AppAnswersController extends AnswersAppController {
 
 /**
  * Edit method
- * 
+ *
  * @param uuid
  * @throws MethodNotAllowedException
  * @throws NotFoundException
@@ -148,7 +147,7 @@ class AppAnswersController extends AnswersAppController {
 
 /**
  * Delete method
- * 
+ *
  * @throws Exception
  */
 	public function delete($id = null) {
@@ -162,7 +161,7 @@ class AppAnswersController extends AnswersAppController {
 
 /**
  * formProcess method
- * 
+ *
  * @throws MethodNotAllowedException
  */
 	public function formProcess() {
@@ -357,7 +356,7 @@ class AppAnswersController extends AnswersAppController {
 
 /**
  * Quick Function for CSV downloads of all form submissions
- * 
+ *
  * @codingStandardsIgnoreStart
  * @todo there is a better way to to this, See new code in submissions
  * @codingStandardsIgnoreEnd
@@ -408,4 +407,5 @@ class AppAnswersController extends AnswersAppController {
 if (!isset($refuseInit)) {
 	class AnswersController extends AppAnswersController {
 	}
+
 }

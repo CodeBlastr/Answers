@@ -1,9 +1,14 @@
 <?php
-	if ( !empty($data['User']) ) {
-		$submittedBy = $this->Html->link($data['User']['full_name'], array('plugin' => 'users', 'controller' => 'users', 'action' => 'view', $data['User']['id']));
-	} else {
-		$submittedBy = '(guest)';
-	}
+if (!empty($data['User'])) {
+	$submittedBy = $this->Html->link($data['User']['full_name'], array(
+		'plugin' => 'users',
+		'controller' => 'users',
+		'action' => 'view',
+		$data['User']['id']
+	));
+} else {
+	$submittedBy = '(guest)';
+}
 ?>
 
 <table>
@@ -28,10 +33,10 @@
 			<th>submitted value</th>
 		</tr>
 	</thead>
-<?php foreach ( $data['AnswerAnswer'] as $answer ) {?>
+<?php foreach ($data['AnswerAnswer'] as $answer) : ?>
 	<tr>
 		<td><?php echo $answer['form_input_name'] ?></td>
 		<td><?php echo unserialize($answer['value']) ?></td>
 	</tr>
-<?php } ?>
+<?php endforeach; ?>
 </table>
