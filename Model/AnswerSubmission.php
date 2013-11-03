@@ -28,6 +28,9 @@ class AppAnswerSubmission extends AnswersAppModel {
 		)
 	);
 
+/**
+ * Constructor
+ */
 	public function __construct($id = false, $table = null, $ds = null) {
 		if (CakePlugin::loaded('Media')) {
 			$this->actsAs[] = 'Media.MediaAttachable';
