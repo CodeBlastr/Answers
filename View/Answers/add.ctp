@@ -112,7 +112,7 @@
 					<p>Contact Options not available yet</p>
 				</div>
 			</div>
-			<div class="row-fluid">';
+			<div class="row-fluid">
 				<?php echo $this->Form->submit('Save Form', array('class' => 'btn pull-right')); ?>
 			</div>
 			<div id="labelTextArea">
