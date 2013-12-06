@@ -58,6 +58,33 @@ class AppAnswerSubmissionsController extends AnswersAppController {
 		$this->set('data', $data);
 	}
 
+	public function edit($id) {
+		if (empty($id)) {
+			$this->Session->setFlash('Invalid request');
+			$this->redirect($this->referer());
+		}
+		
+		if(!empty($this->request->data)) {
+			if($this->AnswerSubmission->saveAll($this->request->data)) {
+				$this->Session->setFlash('Submission Saved');
+			}else {
+				$this->Session->setFlash('Submission Not Saved');
+			}
+		}		
+		$this->request->data = $this->AnswerSubmission->find('first', array(
+			'conditions' => array('AnswerSubmission.id' => $id),
+			'contain' => array(
+				'AnswerAnswer',
+				'User' => array('fields' => array(
+						'id',
+						'full_name'
+					))
+			)
+		));
+		
+	}
+
+
 }
 
 if (!isset($refuseInit)) {

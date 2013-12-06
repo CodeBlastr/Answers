@@ -47,15 +47,17 @@ class AppAnswerSubmission extends AnswersAppModel {
  */
 	public function submit($answerId) {
 		$uid = CakeSession::read('Auth.User.id');
-		$conditions = array('answer_id' => $answerId, 'creator_id' => $uid);
+		$submissionCount = 0;
+		if($uid) {
+              	$conditions = array('answer_id' => $answerId, 'creator_id' => $uid);
 			$submissionCount = $this->find('count', array($conditions));
-			$answerSubmission = array('AnswerSubmission' => array(
-				'answer_id' => $answerId,
-				'count' => 0,
-				'from_ip' => $_SERVER['REMOTE_ADDR'],
-			));
-		$this->save($answerSubmission);
-		return $submissionCount + 1;
+		}
+		$answerSubmission = array('AnswerSubmission' => array(
+			'answer_id' => $answerId,
+			'count' => $submissionCount + 1,
+			'from_ip' => $_SERVER['REMOTE_ADDR'],
+		));
+		return $this->save($answerSubmission);
 	}
 
 }

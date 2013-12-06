@@ -181,10 +181,15 @@ class AppAnswersController extends AnswersAppController {
 		unset($this->request->data['Answer']['redirect']);
 		$answers = array();
 		$answerdata = json_decode($answer['Answer']['content_json']);
+		$submission = $this->_submission($id);
+		if(!$submission) {
+			throw new Exception('Error Saving');
+		}
 		foreach ($this->request->data['Answer'] as $key => $value) {
 			$answers[] = array(
 				'answer_id' => $id,
 				'form_input_name' => $key,
+				'answer_submission_id' => $submission['AnswerSubmission']['id'],	
 				'value' => is_array($value) ? implode(' / ', $value) : $value,
 			);
 		}
@@ -198,7 +203,6 @@ class AppAnswersController extends AnswersAppController {
 				$data[$model] = $this->request->data['Answer'];
 				$this->$model->$action($data);
 			}
-			//$this->_submission($id);
 			$this->Session->setFlash($message);
 			$this->Answer->process($answer, $answers);
 		} catch(Exception $e) {
@@ -295,6 +299,9 @@ class AppAnswersController extends AnswersAppController {
 	protected function _submissionCount($answerId) {
 		//get the user id
 		$uid = $this->Session->read('Auth.User.id');
+		if(!$uid) {
+			return 0;
+		}
 		$conditions = array(
 			'answer_id' => $answerId,
 			'creator_id' => $uid
