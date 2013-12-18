@@ -30,6 +30,7 @@ class AppAnswerSubmissionsController extends AnswersAppController {
 					'id',
 					'title'
 				)),
+			'AnswerAnswer',
 			'User' => array('fields' => array(
 					'id',
 					'full_name'
