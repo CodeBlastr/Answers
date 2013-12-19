@@ -1,1 +1,1 @@
-<?php echo $this->requestAction('/answers/answers/display/' . $id); ?>
+<?php echo $this->requestAction('/answers/answers/display/' . $id);
