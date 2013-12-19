@@ -1,5 +1,5 @@
 <div class="row-fluid">
-	<h3><?php echo !isset($showtitle) ? __('<h3>%s</h3>', $form['Answer']['title']) : null; ?></h3>
+	<?php echo !isset($showtitle) ? __('<h3>%s</h3>', $form['Answer']['title']) : null; ?>
 	<?php if($this->Session->read('Message.formmessage')): ?>
 		<div class="alert alert-warning alert-dismissable">
   			<button type="button" class="close" data-dismiss="alert">&times;</button>
