@@ -100,6 +100,7 @@ class AppAnswersController extends AnswersAppController {
 				throw new MethodNotAllowedException('Record does not exist');
 			}
 		}
+		
 		$this->set('form', $form);
 		$this->set('submitButtonText', !empty($form['Answer']['submit_button_text']) ? $form['Answer']['submit_button_text'] : 'Submit');
 		$this->set('submit', $this->_checkSubmissions($form));
@@ -320,7 +321,7 @@ class AppAnswersController extends AnswersAppController {
  * @return {string} 	Rendered From View
  * @throws NotFoundException
  */
-	public function display($id) {
+	public function display($id, $code = false) {
 		$this->Answer->id = $id;
 		if (!$this->Answer->exists()) {
 			throw new NotFoundException(__('Invalid form.'));
@@ -330,7 +331,11 @@ class AppAnswersController extends AnswersAppController {
 		$this->set('form', $form);
 		$this->set('submit', $this->_checkSubmissions($form));
 		$this->set('showtitle', false);
+		if($code === 'code') {
+			return $form;
+		}
 		$html = $this->render('view');
+		
 	}
 
 	protected function _checkSubmissions($answer) {
