@@ -181,19 +181,31 @@ class AppAnswersController extends AnswersAppController {
 		$redirect = $this->request->data['Answer']['redirect'];
 		unset($this->request->data['Answer']['redirect']);
 		$answers = array();
-		$answerdata = json_decode($answer['Answer']['content_json']);
+		//$answerdata = json_decode($answer['Answer']['content_json']);
 		$submission = $this->_submission($id);
 		if(!$submission) {
 			throw new Exception('Error Saving');
 		}
 		foreach ($this->request->data['Answer'] as $key => $value) {
-			$answers[] = array(
-				'answer_id' => $id,
-				'form_input_name' => $key,
-				'answer_submission_id' => $submission['AnswerSubmission']['id'],	
-				'value' => is_array($value) ? implode(' / ', $value) : $value,
-			);
+			if($key == 'submitted_files') {
+				foreach ($value as $i => $v) {
+					$answers[] = array(
+						'answer_id' => $id,
+						'form_input_name' => $key.'.'.$i,
+						'answer_submission_id' => $submission['AnswerSubmission']['id'],
+						'value' => $v,
+					);
+				}
+			}else {
+				$answers[] = array(
+					'answer_id' => $id,
+					'form_input_name' => $key,
+					'answer_submission_id' => $submission['AnswerSubmission']['id'],	
+					'value' => is_array($value) ? implode(' / ', $value) : $value,
+				);
+			}
 		}
+		
 		App::uses('Sanitize', 'Utility');
 		$answers = Sanitize::clean($answers, array('encode' => false));
 		try {
@@ -209,6 +221,7 @@ class AppAnswersController extends AnswersAppController {
 		} catch(Exception $e) {
 			debug($e->getMessage());
 		}
+		
 		switch ($redirect) {
 			case 'form' :
 				$this->redirect($this->referer());
