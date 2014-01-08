@@ -10,7 +10,7 @@ if (!empty($data['User'])) {
 	$submittedBy = '(guest)';
 }
 $data = $this->request->data;
-debug($data);
+
 ?>
 
 <?php echo $this->Form->create('AnswerSubmission'); ?>
