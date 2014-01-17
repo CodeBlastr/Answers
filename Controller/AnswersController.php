@@ -222,13 +222,18 @@ class AppAnswersController extends AnswersAppController {
 			debug($e->getMessage());
 		}
 		
-		switch ($redirect) {
-			case 'form' :
-				$this->redirect($this->referer());
-				break;
-			default :
-				$this->redirect($redirect);
-				break;
+		if($this->request->is('ajax')) {
+			$this->response->statusCode(200);
+			return $this->response;
+		}else {
+			switch ($redirect) {
+				case 'form' :
+					$this->redirect($this->referer());
+					break;
+				default :
+					$this->redirect($redirect);
+					break;
+			}
 		}
 	}
 
