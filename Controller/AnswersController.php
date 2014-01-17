@@ -216,7 +216,6 @@ class AppAnswersController extends AnswersAppController {
 				$data[$model] = $this->request->data['Answer'];
 				$this->$model->$action($data);
 			}
-			$this->Session->setFlash($message);
 			$this->Answer->process($answer, $answers);
 		} catch(Exception $e) {
 			debug($e->getMessage());
@@ -226,6 +225,7 @@ class AppAnswersController extends AnswersAppController {
 			$this->response->statusCode(200);
 			return $this->response;
 		}else {
+			$this->Session->setFlash($message);
 			switch ($redirect) {
 				case 'form' :
 					$this->redirect($this->referer());
