@@ -36,11 +36,11 @@ if (!empty($data['User'])) {
 <?php foreach ($data['AnswerAnswer'] as $answer) : ?>
 	<tr>
 		<td><?php echo $answer['form_input_name'] ?></td>
-		<td><?php 
+		<td><?php
 				if(strpos($answer['form_input_name'], 'submitted_files') !== false) {
 					$val = unserialize($answer['value']);
 					$ext = explode('.', $val);
-					$ext = array_pop($ext);
+					$ext = strtolower(array_pop($ext));
 					if($ext == 'jpg' || $ext == 'jpeg' || $ext == 'gif' || $ext == 'bmp' || $ext == 'png') {
 						echo "<img width='200' height='200' src='/{$val}' />";
 					}else {
@@ -50,7 +50,7 @@ if (!empty($data['User'])) {
 					echo unserialize($answer['value']);
 				}?>
 		</td>
-				
+
 	</tr>
 <?php endforeach; ?>
 </table>
