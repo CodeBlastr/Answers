@@ -1,5 +1,6 @@
 <?php
 App::uses('AnswersAppController', 'Answers.Controller');
+
 class AppAnswersController extends AnswersAppController {
 
 /**
@@ -170,6 +171,7 @@ class AppAnswersController extends AnswersAppController {
 		if (empty($this->request->data)) {
 			throw new MethodNotAllowedException('No data');
 		}
+
 		// Grab the needed variables for the form and unset them
 		$id = $this->request->data['Answer']['id'];
 		$answer = $this->Answer->findById($id);
@@ -187,37 +189,49 @@ class AppAnswersController extends AnswersAppController {
 		if(!$submission) {
 			throw new Exception('Error Saving');
 		}
+
 		foreach ($this->request->data['Answer'] as $key => $value) {
 			if($key == 'submitted_files') {
-				foreach ($value as $i => $v) {
-					$answers[] = array(
-						'answer_id' => $id,
-						'form_input_name' => $key.'.'.$i,
-						'answer_submission_id' => $submission['AnswerSubmission']['id'],
-						'value' => $v,
-					);
+
+				if(is_null($value['error'])){
+					foreach ($value as $i => $v) {
+						$answers[] = array(
+							'answer_id' => $id,
+							'form_input_name' => $key.'.'.$i,
+							'answer_submission_id' => $submission['AnswerSubmission']['id'],
+							'value' => $v,
+						);
+					}
 				}
 			}else {
+
 				$answers[] = array(
 					'answer_id' => $id,
 					'form_input_name' => $key,
-					'answer_submission_id' => $submission['AnswerSubmission']['id'],	
+					'answer_submission_id' => $submission['AnswerSubmission']['id'],
 					'value' => is_array($value) ? implode(' / ', $value) : $value,
 				);
+
 			}
 		}
-		
+
 		App::uses('Sanitize', 'Utility');
 		$answers = Sanitize::clean($answers, array('encode' => false));
+
 		try {
+
 			if ($model == 'AnswerAnswer') {
 				$this->$model->$action($answers);
+
 			} else {
 				$this->loadModel($plugin . '.' . $model);
 				$data[$model] = $this->request->data['Answer'];
 				$this->$model->$action($data);
 			}
+
 			$this->Answer->process($answer, $answers);
+
+
 		} catch(Exception $e) {
 			debug($e->getMessage());
 		}
