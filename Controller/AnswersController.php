@@ -35,6 +35,7 @@ class AppAnswersController extends AnswersAppController {
  * index view of all forms created
  */
 	public function index() {
+		$this->redirect('admin');
 		$this->Answer->recursive = 0;
 		$this->set('forms', $this->paginate());
 	}
