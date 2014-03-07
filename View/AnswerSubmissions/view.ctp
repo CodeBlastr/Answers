@@ -22,7 +22,12 @@ if (!empty($data['User'])) {
 	</tr>
 	<tr>
 		<th>IP address:</th>
-		<td><?php echo $data['AnswerSubmission']['from_ip'] ?></td>
+		<td>
+			<a title="View info about this IP" href="http://whatismyipaddress.com/ip/<?php echo $data['AnswerSubmission']['from_ip'] ?>" target="_blank">
+				<?php echo $data['AnswerSubmission']['from_ip'] ?>
+				<span class="glyphicon glyphicon-new-window"></span>
+			</a>
+		</td>
 	</tr>
 </table>
 
