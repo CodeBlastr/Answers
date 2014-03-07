@@ -24,7 +24,7 @@ class AppAnswerAnswer extends AnswersAppModel {
 	);
 
 	public function beforeSave($options = array()) {
-		if(isset($this->data['AnswerAnswer']['value']['tmp_name'])) {
+		if(isset($this->data['AnswerAnswer']['value']['tmp_name']) && !empty($this->data['AnswerAnswer']['value']['tmp_name'])) {
 			$result = $this->uploadFiles('submitted_files', array($this->data['AnswerAnswer']['value']));
 			if(isset($result['errors'])) {
 				throw new Exception($result['errors'][0]);
@@ -32,7 +32,7 @@ class AppAnswerAnswer extends AnswersAppModel {
 			if(isset($result['urls'])) {
 				$this->data['AnswerAnswer']['value'] = $result['urls'][0];
 			}else {
-				throw new Exception('Something went wrong');
+				throw new Exception('There was an error with the submitted file.');
 			}
 		}
 		$this->data['AnswerAnswer']['value'] = serialize($this->data['AnswerAnswer']['value']);
