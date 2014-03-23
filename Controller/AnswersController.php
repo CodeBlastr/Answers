@@ -368,7 +368,6 @@ class AppAnswersController extends AnswersAppController {
 			return $form;
 		}
 		$html = $this->render('view');
-		
 	}
 
 	protected function _checkSubmissions($answer) {
