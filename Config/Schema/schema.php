@@ -1,11 +1,7 @@
 <?php
-class AnswersSchema extends CakeSchema {
+class AppAnswersSchema extends CakeSchema {
 
 	public $renames = array();
-
-	public function __construct($options = array()) {
-		parent::__construct();
-	}
 
 	public function before($event = array()) {
 		App::uses('UpdateSchema', 'Model');
@@ -388,3 +384,62 @@ class AnswersSchema extends CakeSchema {
 		)
 	);
 }
+if (!isset($refuseInit)) {
+	class AnswersSchema extends AppAnswersSchema {}
+}
+
+
+
+/* This is an example of how you can have and use per site config files
+$refuseInit = true; 
+require_once(ROOT . DS . 'app' . DS . 'Plugin' .DS. 'Answers' .DS. 'Config' . DS . 'Schema' . DS . 'schema.php');
+
+class AnswersSchema extends AppAnswersSchema {
+	
+	public function __construct($options = array()) {
+		// add / edit a table not in the app config file
+		// order is important
+		// don't forget you still have to add this to pluginize() else it will cause a loop when running auto update
+		// $this->answer_delete = array(
+			// 'id' => array(
+				// 'type' => 'integer',
+				// 'null' => false,
+				// 'default' => null,
+				// 'key' => 'primary'
+				// ),
+			// 'indexes' => array(
+				// 'PRIMARY' => array('column' => 'id','unique' => 1)
+				// ),
+			// 'tableParameters' => array(
+				// 'charset' => 'utf8',
+				// 'collate' => 'utf8_general_ci',
+				// 'engine' => 'MyISAM'
+				// )
+			// );
+
+		parent::__construct($options);
+
+		// add a new column to an existing table
+		// order related to parent::__construct() is important
+		// $this->tables['answer_answers'] = ZuhaSet::array_splice_before($this->tables['answer_answers'], array(
+			// 'answer_field_delete' => array( // added column name
+				// 'type' => 'string',
+				// 'null' => true,
+				// 'default' => null,
+				// 'length' => 36,
+				// 'collate' => 'utf8_general_ci',
+				// 'charset' => 'utf8'
+				// )), 'indexes');
+
+		// edit an existing column
+		// order related to parent::__construct() is important
+		// $this->tables['answer_answers']['answer_id'] = array(
+				// 'type' => 'string',
+				// 'null' => true,
+				// 'default' => null,
+				// 'length' => 44, // edited line
+				// 'collate' => 'utf8_general_ci',
+				// 'charset' => 'utf8'
+			// );
+	}
+} */
