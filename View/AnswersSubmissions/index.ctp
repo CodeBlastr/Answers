@@ -10,11 +10,11 @@
 	<tbody>
 	<?php foreach ($submissions as $submission) : ?>
 		<tr>
-			<td><?php echo $submission['AnswerSubmission']['created'] ?></td>
+			<td><?php echo $submission['AnswersSubmission']['created'] ?></td>
 			<td><?php echo $this->Html->link($submission['Answer']['title'], array('action' => 'index', $submission['Answer']['id'])) ?></td>
 			<td><?php echo !empty($submission['User']) ? $this->Html->link($submission['User']['full_name'], array('plugin' => 'users', 'controller' => 'users', 'action' => 'view', $submission['User']['id'])) : '(guest)'; ?></td>
-			<td><?php echo $this->Html->link('view', array('action' => 'view', $submission['AnswerSubmission']['id']), array('class' => 'btn btn-xs')) ?>
-				<?php echo $this->Html->link('edit', array('action' => 'edit', $submission['AnswerSubmission']['id']), array('class' => 'btn btn-xs')) ?>
+			<td><?php echo $this->Html->link('view', array('action' => 'view', $submission['AnswersSubmission']['id']), array('class' => 'btn btn-xs')) ?>
+				<?php echo $this->Html->link('edit', array('action' => 'edit', $submission['AnswersSubmission']['id']), array('class' => 'btn btn-xs')) ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>

@@ -13,8 +13,8 @@ $data = $this->request->data;
 
 ?>
 
-<?php echo $this->Form->create('AnswerSubmission'); ?>
-<?php echo $this->Form->hidden('AnswerSubmission.id'); ?>
+<?php echo $this->Form->create('AnswersSubmission'); ?>
+<?php echo $this->Form->hidden('AnswersSubmission.id'); ?>
 <table>
 	<tr>
 		<th>Submitted by:</th>
@@ -22,11 +22,11 @@ $data = $this->request->data;
 	</tr>
 	<tr>
 		<th>Date:</th>
-		<td><?php echo $data['AnswerSubmission']['created'] ?></td>
+		<td><?php echo $data['AnswersSubmission']['created'] ?></td>
 	</tr>
 	<tr>
 		<th>IP address:</th>
-		<td><?php echo $data['AnswerSubmission']['from_ip'] ?></td>
+		<td><?php echo $data['AnswersSubmission']['from_ip'] ?></td>
 	</tr>
 </table>
 
@@ -37,17 +37,17 @@ $data = $this->request->data;
 			<th>submitted value(s)</th>
 		</tr>
 	</thead>
-<?php foreach ($data['AnswerAnswer'] as $i => $answer) : ?>
+<?php foreach ($data['AnswersResult'] as $i => $answer) : ?>
 	<tr>
-		<td><?php echo $answer['form_input_name'] ?><?php echo $this->Form->hidden('AnswerAnswer.'.$i.'.id')?></td>
+		<td><?php echo $answer['form_input_name'] ?><?php echo $this->Form->hidden('AnswersResult.'.$i.'.id')?></td>
 		<td><?php 
 				$value = unserialize($answer['value']);
 				if(is_array($value)) {
 					foreach ($value as $j => $v) {
-						echo $this->Form->input('AnswerAnswer.'.$i.'.value.'.$j, array('label' => false, 'type' => 'text', 'value' => $v));
+						echo $this->Form->input('AnswersResult.'.$i.'.value.'.$j, array('label' => false, 'type' => 'text', 'value' => $v));
 					}
 				}else {
-					echo $this->Form->input('AnswerAnswer.'.$i.'.value', array('label' => false, 'type' => 'text', 'value' => $value));
+					echo $this->Form->input('AnswersResult.'.$i.'.value', array('label' => false, 'type' => 'text', 'value' => $value));
 				}
 		?></td>
 	</tr>

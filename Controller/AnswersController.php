@@ -17,9 +17,9 @@ class AppAnswersController extends AnswersAppController {
  */
 	public $uses = array(
 		'Answers.Answer',
-		'Answers.AnswerAnswer',
+		'Answers.AnswersResult',
 		'Contact.Contact',
-		'Answers.AnswerSubmission'
+		'Answers.AnswersSubmission'
 	);
 
 /**
@@ -50,7 +50,7 @@ class AppAnswersController extends AnswersAppController {
 		if (!empty($this->request->data) && $this->request->isPost()) {
 			$this->request->data['Answer']['plugin'] = ZuhaInflector::pluginize($this->request->data['Answer']['model']);
 			//For right now I have the actions hard coded
-			if ($this->request->data['Answer']['model'] == 'AnswerAnswer') {
+			if ($this->request->data['Answer']['model'] == 'AnswersResult') {
 				$this->request->data['Answer']['action'] = 'saveAll';
 			} else {
 				$this->request->data['Answer']['action'] = 'save';
@@ -198,7 +198,7 @@ class AppAnswersController extends AnswersAppController {
 						$answers[] = array(
 							'answer_id' => $id,
 							'form_input_name' => $key.'.'.$i,
-							'answer_submission_id' => $submission['AnswerSubmission']['id'],
+							'answer_submission_id' => $submission['AnswersSubmission']['id'],
 							'value' => $v,
 						);
 					}
@@ -208,7 +208,7 @@ class AppAnswersController extends AnswersAppController {
 				$answers[] = array(
 					'answer_id' => $id,
 					'form_input_name' => $key,
-					'answer_submission_id' => $submission['AnswerSubmission']['id'],
+					'answer_submission_id' => $submission['AnswersSubmission']['id'],
 					'value' => is_array($value) ? implode(' / ', $value) : $value,
 				);
 
@@ -220,7 +220,7 @@ class AppAnswersController extends AnswersAppController {
 
 		try {
 
-			if ($model == 'AnswerAnswer') {
+			if ($model == 'AnswersResult') {
 				$this->$model->$action($answers);
 
 			} else {
@@ -257,11 +257,11 @@ class AppAnswersController extends AnswersAppController {
  *
  * @codingStandardsIgnoreStart
  * @todo Need to come up with a way to register and cache those models.
- * Right now the model only returns the AnswerAnswer Model to save
+ * Right now the model only returns the AnswersResult Model to save
  * @codingStandardsIgnoreEnd
  */
 	protected function _getModels() {
-		$models = array('AnswerAnswer' => 'Save to Database', );
+		$models = array('AnswersResult' => 'Save to Database', );
 		if (CakePlugin::loaded('Courses')) {
 			$models['CourseGradeAnswer'] = 'Save to Grade Table';
 		}
@@ -327,7 +327,7 @@ class AppAnswersController extends AnswersAppController {
  * @return the count
  */
 	protected function _submission($answerId) {
-		return $this->AnswerSubmission->submit($answerId);
+		return $this->AnswersSubmission->submit($answerId);
 	}
 
 	protected function _submissionCount($answerId) {
@@ -341,10 +341,10 @@ class AppAnswersController extends AnswersAppController {
 			'creator_id' => $uid
 		);
 		//		$count = 0;
-		//		if($this->AnswerSubmission->hasAny($conditions)) {
-		//			$count = $this->AnswerSubmission->field('count', array($conditions));
+		//		if($this->AnswersSubmission->hasAny($conditions)) {
+		//			$count = $this->AnswersSubmission->field('count', array($conditions));
 		//		}
-		return $this->AnswerSubmission->find('count', $conditions);
+		return $this->AnswersSubmission->find('count', $conditions);
 	}
 
 /**
@@ -355,6 +355,7 @@ class AppAnswersController extends AnswersAppController {
  * @throws NotFoundException
  */
 	public function display($id, $code = false) {
+		//debug('here');exit;
 		$this->Answer->id = $id;
 		if (!$this->Answer->exists()) {
 			throw new NotFoundException(__('Invalid form.'));
@@ -405,27 +406,27 @@ class AppAnswersController extends AnswersAppController {
  * @todo there is a better way to to this, See new code in submissions
  * @codingStandardsIgnoreEnd
  */
-	public function answersubmissions($id = false) {
+	public function AnswersSubmissions($id = false) {
 		if ($id) {
-			$answers = $this->Answer->AnswerAnswer->find('all', array('conditions' => array('answer_id' => $id)));
+			$answers = $this->Answer->AnswersResult->find('all', array('conditions' => array('answer_id' => $id)));
 			$cleanarray = array();
 			if (!empty($answers)) {
 				$index = 0;
 				$prev = 0;
-				$firstfield = $answers[0]['AnswerAnswer']['form_input_name'];
+				$firstfield = $answers[0]['AnswersResult']['form_input_name'];
 				foreach ($answers as $i => $v) {
-					//$next = strtotime($answers[$i]['AnswerAnswer']['created']);00NA0000001uEF4
-					if ($answers[$i]['AnswerAnswer']['form_input_name'] == $firstfield) {
+					//$next = strtotime($answers[$i]['AnswersResult']['created']);00NA0000001uEF4
+					if ($answers[$i]['AnswersResult']['form_input_name'] == $firstfield) {
 						$index++;
 					}
 					//$prev = $next;
 					if (!key_exists($index, $cleanarray)) {
-						$cleanarray[$index] = array('date_created' => date('Y-M-d H:i:s', strtotime($answers[$i]['AnswerAnswer']['created'])));
+						$cleanarray[$index] = array('date_created' => date('Y-M-d H:i:s', strtotime($answers[$i]['AnswersResult']['created'])));
 					}
-					if (!key_exists($answers[$i]['AnswerAnswer']['form_input_name'], $cleanarray[$index])) {
-						$cleanarray[$index][$answers[$i]['AnswerAnswer']['form_input_name']];
+					if (!key_exists($answers[$i]['AnswersResult']['form_input_name'], $cleanarray[$index])) {
+						$cleanarray[$index][$answers[$i]['AnswersResult']['form_input_name']];
 					}
-					$cleanarray[$index][$answers[$i]['AnswerAnswer']['form_input_name']] = unserialize($answers[$i]['AnswerAnswer']['value']);
+					$cleanarray[$index][$answers[$i]['AnswersResult']['form_input_name']] = unserialize($answers[$i]['AnswersResult']['value']);
 				}
 			}
 			//One More Loop to set the indexes

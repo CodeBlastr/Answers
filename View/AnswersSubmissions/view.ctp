@@ -18,13 +18,13 @@ if (!empty($data['User'])) {
 	</tr>
 	<tr>
 		<th>Date:</th>
-		<td><?php echo $data['AnswerSubmission']['created'] ?></td>
+		<td><?php echo $data['AnswersSubmission']['created'] ?></td>
 	</tr>
 	<tr>
 		<th>IP address:</th>
 		<td>
-			<a title="View info about this IP" href="http://whatismyipaddress.com/ip/<?php echo $data['AnswerSubmission']['from_ip'] ?>" target="_blank">
-				<?php echo $data['AnswerSubmission']['from_ip'] ?>
+			<a title="View info about this IP" href="http://whatismyipaddress.com/ip/<?php echo $data['AnswersSubmission']['from_ip'] ?>" target="_blank">
+				<?php echo $data['AnswersSubmission']['from_ip'] ?>
 				<span class="glyphicon glyphicon-new-window"></span>
 			</a>
 		</td>
@@ -38,7 +38,7 @@ if (!empty($data['User'])) {
 			<th>submitted value</th>
 		</tr>
 	</thead>
-<?php foreach ($data['AnswerAnswer'] as $answer) : ?>
+<?php foreach ($data['AnswersResult'] as $answer) : ?>
 	<tr>
 		<td><?php echo $answer['form_input_name'] ?></td>
 		<td><?php

@@ -1,9 +1,11 @@
 <?php
 App::uses('AnswersAppModel', 'Answers.Model');
-class AppAnswerAnswer extends AnswersAppModel {
+class AppAnswersResult extends AnswersAppModel {
 
-	public $name = 'AnswerAnswer';
-
+	public $name = 'AnswersResult';
+	
+	public $useTable = 'answer_answers';
+	
 	public $belongsTo = array(
 		'Creator' => array(
 			'className' => 'Users.User',
@@ -17,37 +19,37 @@ class AppAnswerAnswer extends AnswersAppModel {
 			'className' => 'Answers.Answer',
 			'foreignKey' => 'answer_id'
 		),
-		'AnswerSubmission' => array(
-			'className' => 'Answers.AnswerSubmission',
+		'AnswersSubmission' => array(
+			'className' => 'Answers.AnswersSubmission',
 			'foreignKey' => 'answer_sumbmission_id'
 		)
 	);
 
 	public function beforeSave($options = array()) {
-		if(isset($this->data['AnswerAnswer']['value']['tmp_name']) && !empty($this->data['AnswerAnswer']['value']['tmp_name'])) {
-			$result = $this->uploadFiles('submitted_files', array($this->data['AnswerAnswer']['value']));
+		if(isset($this->data['AnswersResult']['value']['tmp_name']) && !empty($this->data['AnswersResult']['value']['tmp_name'])) {
+			$result = $this->uploadFiles('submitted_files', array($this->data['AnswersResult']['value']));
 			if(isset($result['errors'])) {
 				throw new Exception($result['errors'][0]);
 			}
 			if(isset($result['urls'])) {
-				$this->data['AnswerAnswer']['value'] = $result['urls'][0];
+				$this->data['AnswersResult']['value'] = $result['urls'][0];
 			}else {
 				throw new Exception('There was an error with the submitted file.');
 			}
 		}
-		$this->data['AnswerAnswer']['value'] = serialize($this->data['AnswerAnswer']['value']);
+		$this->data['AnswersResult']['value'] = serialize($this->data['AnswersResult']['value']);
 		return true;
 	}
 
 	public function afterFind($results, $primary = false) {
-		if (is_array($results['AnswerAnswer'])) {
-			foreach ($results['AnswerAnswer'] as $key => $value) {
+		if (is_array($results['AnswersResult'])) {
+			foreach ($results['AnswersResult'] as $key => $value) {
 				if ($key == 'value') {
-					$results['AnswerAnswer'][$key] = unserialize($value);
+					$results['AnswersResult'][$key] = unserialize($value);
 				}
 			}
 		} else {
-			$results['AnswerAnswer']['value'] = unserialize($results['AnswerAnswer']['value']);
+			$results['AnswersResult']['value'] = unserialize($results['AnswersResult']['value']);
 		}
 		return $results;
 	}
@@ -149,7 +151,7 @@ class AppAnswerAnswer extends AnswersAppModel {
 }
 
 if (!isset($refuseInit)) {
-	class AnswerAnswer extends AppAnswerAnswer {
+	class AnswersResult extends AppAnswersResult {
 	}
 
 }

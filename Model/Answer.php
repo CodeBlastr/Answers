@@ -1,5 +1,6 @@
 <?php
 App::uses('AnswersAppModel', 'Answers.Model');
+
 class AppAnswer extends AnswersAppModel {
 
 	public $name = 'Answer';
@@ -10,13 +11,13 @@ class AppAnswer extends AnswersAppModel {
 	);
 
 	public $hasMany = array(
-		'AnswerSubmission' => array(
-			'className' => 'Answers.AnswerSubmission',
+		'AnswersSubmission' => array(
+			'className' => 'Answers.AnswersSubmission',
 			'foreignKey' => 'answer_id',
 			'dependent' => true,
 		),
-		'AnswerAnswer' => array(
-			'className' => 'Answers.AnswerAnswer',
+		'AnswersResult' => array(
+			'className' => 'Answers.AnswersResult',
 			'foreignKey' => 'answer_id',
 			'dependent' => true,
 		),
@@ -104,10 +105,14 @@ class AppAnswer extends AnswersAppModel {
  * @param {$answers} array of $answers
  * @return array keyed by input => value
  */
-	protected function _cleanAnswers($answers) {
+	protected function _cleanAnswers($answers, $unserialize=false) {
 		$arr = array();
 		foreach ($answers as $answer) {
-			$arr[$answer['form_input_name']] = $answer['value'];
+			if($unserialize) {
+				$arr[$answer['form_input_name']] = unserialize($answer['value']);
+			}else {
+				$arr[$answer['form_input_name']] = $answer['value'];
+			}
 		}
 		return $arr;
 	}
@@ -126,6 +131,11 @@ class AppAnswer extends AnswersAppModel {
 		}
 		return $str;
 	}
+	
+	public function cleanUnpackAnswers($answers) {
+		return $this->_cleanAnswers($answers, true);
+	}
+	
 
 }
 
