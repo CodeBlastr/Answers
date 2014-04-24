@@ -6,7 +6,7 @@
 	</div>
 <?php endif; ?>
 <?php if($submit) : ?>
-	<?php echo $this->Form->create('Answers.Answer', array('url' => array('plugin' => 'answers', 'controller' => 'answers', 'action' => 'formProcess'))); ?>
+	<?php echo $this->Form->create('Answers.Answer', array('url' => array('plugin' => 'answers', 'controller' => 'answers', 'action' => 'formProcess'), 'secure' => true)); ?>
 	<?php echo $this->Form->hidden('Answer.id', array('value' => $form['Answer']['id'])); ?>
 	<?php echo $this->Form->hidden('Answer.redirect', array('value' => $form['Answer']['success_url'])); ?>
 	<?php echo $this->Form->hidden('Answer.message', array('value' => $form['Answer']['success_message'])); ?>
