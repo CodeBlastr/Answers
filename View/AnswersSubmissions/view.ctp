@@ -1,5 +1,5 @@
 <?php
-if (!empty($data['User'])) {
+if (!empty($data['User']['id'])) {
 	$submittedBy = $this->Html->link($data['User']['full_name'], array(
 		'plugin' => 'users',
 		'controller' => 'users',
