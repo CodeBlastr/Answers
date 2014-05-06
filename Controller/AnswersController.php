@@ -31,6 +31,10 @@ class AppAnswersController extends AnswersAppController {
 		'add',
 		'edit'
 	);
+	
+	public $allowedActions = array(
+		'formProcess'
+		);
 
 /**
  * index view of all forms created
@@ -41,12 +45,12 @@ class AppAnswersController extends AnswersAppController {
 		$this->set('forms', $this->paginate());
 	}
 	
-	public function __construct($request = null, $response = null) {
-		if(CakePlugin::loaded('Forms')) {
-			$this->components[] = 'FormSecurity';
-		}
-		parent::__construct($request, $response);
-	}
+	// public function __construct($request = null, $response = null) {
+		// if(CakePlugin::loaded('Forms')) {
+			// $this->components[] = 'FormSecurity';
+		// }
+		// parent::__construct($request, $response);
+	// }
 
 /**
  * Add method
@@ -362,7 +366,6 @@ class AppAnswersController extends AnswersAppController {
  * @throws NotFoundException
  */
 	public function display($id, $code = false) {
-		//debug('here');exit;
 		$this->Answer->id = $id;
 		if (!$this->Answer->exists()) {
 			throw new NotFoundException(__('Invalid form.'));
