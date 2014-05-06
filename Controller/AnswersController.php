@@ -32,6 +32,10 @@ class AppAnswersController extends AnswersAppController {
 		'edit',
 		'formProcess'
 	);
+	
+	public $allowedActions = array(
+		'formProcess'
+		);
 
 /**
  * index view of all forms created
@@ -41,6 +45,13 @@ class AppAnswersController extends AnswersAppController {
 		$this->Answer->recursive = 0;
 		$this->set('forms', $this->paginate());
 	}
+	
+	// public function __construct($request = null, $response = null) {
+		// if(CakePlugin::loaded('Forms')) {
+			// $this->components[] = 'FormSecurity';
+		// }
+		// parent::__construct($request, $response);
+	// }
 
 /**
  * Add method
