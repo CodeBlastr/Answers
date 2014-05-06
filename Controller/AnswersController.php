@@ -362,7 +362,6 @@ class AppAnswersController extends AnswersAppController {
  * @throws NotFoundException
  */
 	public function display($id, $code = false) {
-		//debug('here');exit;
 		$this->Answer->id = $id;
 		if (!$this->Answer->exists()) {
 			throw new NotFoundException(__('Invalid form.'));
