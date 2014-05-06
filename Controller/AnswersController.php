@@ -27,9 +27,10 @@ class AppAnswersController extends AnswersAppController {
  *
  * @var string
  */
-	public $allowedMethods = array(
+	public $allowedActions = array(
 		'add',
-		'edit'
+		'edit',
+		'formProcess'
 	);
 
 /**
@@ -355,7 +356,6 @@ class AppAnswersController extends AnswersAppController {
  * @throws NotFoundException
  */
 	public function display($id, $code = false) {
-		//debug('here');exit;
 		$this->Answer->id = $id;
 		if (!$this->Answer->exists()) {
 			throw new NotFoundException(__('Invalid form.'));
@@ -365,6 +365,7 @@ class AppAnswersController extends AnswersAppController {
 		$this->set('form', $form);
 		$this->set('submit', $this->_checkSubmissions($form));
 		$this->set('showtitle', false);
+		$this->set('submitButtonText', $form['Answer']['submit_button_text']);
 		if($code === 'code') {
 			return $form;
 		}
