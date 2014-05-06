@@ -26,13 +26,7 @@ class AppAnswersController extends AnswersAppController {
  * Allowed Methods from the Classes used to filter the class action methods
  *
  * @var string
- */
-	public $allowedActions = array(
-		'add',
-		'edit',
-		'formProcess'
-	);
-	
+ */	
 	public $allowedActions = array(
 		'formProcess'
 		);
