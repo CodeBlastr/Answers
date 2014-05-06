@@ -26,11 +26,10 @@ class AppAnswersController extends AnswersAppController {
  * Allowed Methods from the Classes used to filter the class action methods
  *
  * @var string
- */
-	public $allowedMethods = array(
-		'add',
-		'edit'
-	);
+ */	
+	public $allowedActions = array(
+		'formProcess'
+		);
 
 /**
  * index view of all forms created
@@ -41,12 +40,12 @@ class AppAnswersController extends AnswersAppController {
 		$this->set('forms', $this->paginate());
 	}
 	
-	public function __construct($request = null, $response = null) {
-		if(CakePlugin::loaded('Forms')) {
-			$this->components[] = 'FormSecurity';
-		}
-		parent::__construct($request, $response);
-	}
+	// public function __construct($request = null, $response = null) {
+		// if(CakePlugin::loaded('Forms')) {
+			// $this->components[] = 'FormSecurity';
+		// }
+		// parent::__construct($request, $response);
+	// }
 
 /**
  * Add method
@@ -371,6 +370,7 @@ class AppAnswersController extends AnswersAppController {
 		$this->set('form', $form);
 		$this->set('submit', $this->_checkSubmissions($form));
 		$this->set('showtitle', false);
+		$this->set('submitButtonText', $form['Answer']['submit_button_text']);
 		if($code === 'code') {
 			return $form;
 		}
