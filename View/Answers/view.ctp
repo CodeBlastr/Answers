@@ -11,7 +11,7 @@
 	<?php echo $this->Form->hidden('Answer.redirect', array('value' => $form['Answer']['success_url'])); ?>
 	<?php echo $this->Form->hidden('Answer.message', array('value' => $form['Answer']['success_message'])); ?>
 	<?php echo $form['Answer']['content']; ?>
-	<?php echo $this->Form->submit($submitButtonText, array('class' => 'btn btn-primary')); ?>
+	<?php echo $this->Form->submit($submitButtonText, array('class' => 'btn submit-button')); ?>
 	<?php echo $this->Form->end(); ?>
 <?php else : ?>
 	<div class="submit"><input class="btn btn-primary" type="button" value="Back" onclick="window.history.back()"></div>
