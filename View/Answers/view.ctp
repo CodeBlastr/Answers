@@ -1,9 +1,9 @@
 <?php echo !isset($showtitle) ? __('<h3>%s</h3>', $form['Answer']['title']) : null; ?>
 <?php if($this->Session->read('Message.formmessage')): ?>
-	<div class="alert alert-warning alert-dismissable">
+<!--	<div class="alert alert-warning alert-dismissable">
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 		<strong>Warning!</strong> <?php echo $this->Session->flash('formmessage'); ?>
-	</div>
+	</div>-->
 <?php endif; ?>
 <?php if($submit) : ?>
 	<?php echo $this->Form->create('Answers.Answer', array('url' => array('plugin' => 'answers', 'controller' => 'answers', 'action' => 'formProcess'), 'secure' => false)); ?>
