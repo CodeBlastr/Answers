@@ -20,3 +20,17 @@
 	<?php endforeach; ?>
 	</tbody>
 </table>
+
+<?php 
+// set contextual search options
+$this->set('forms_search', array(
+	'url' => '/answers/answersSubmissions/index',
+	'inputs' => array(array(
+			'name' => 'contains:data',
+			'options' => array(
+				'label' => '',
+				'placeholder' => 'Submission Search',
+				'value' => !empty($this->request->params['named']['contains']) ? substr($this->request->params['named']['contains'], strpos($this->request->params['named']['contains'], ':') + 1) : null,
+			)
+		))
+));
