@@ -377,6 +377,10 @@ class AppAnswersController extends AnswersAppController {
 		$html = $this->render('view');
 	}
 
+/**
+ * Check submissions
+ * 
+ */
 	protected function _checkSubmissions($answer) {
 		$submit = true;
 		//If user is guest skip this step
